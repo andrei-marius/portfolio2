@@ -1,6 +1,9 @@
 ﻿using DataLayer.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Globalization;
 using System.Reflection.Emit;
 
 namespace WebServer
@@ -8,6 +11,23 @@ namespace WebServer
     public class DatabaseContext : DbContext
     {
         public DbSet<Title> Titles { get; set; }
+        public DbSet<MediaTypeTable> MediaTypes { get; set; }
+        public DbSet<MediaTable> MediaTables { get; set; }
+        public DbSet<DataTable> DataTables { get; set; }
+        public DbSet<MetaDataTable> MetaDataTables { get; set; }
+        public DbSet<Rankings> Rankings { get; set; }
+        public DbSet<RegionalInfo> RegionalInfos { get; set; }
+        public DbSet<TitleGenre> TitleGenres { get; set; }
+        public DbSet<Crew> Crews { get; set; }
+        public DbSet<Casting> Castings { get; set; }
+        public DbSet<Person> Persons { get; set; }
+        public DbSet<PersonRatings> PersonRatings { get; set; }
+        public DbSet<Users> Users { get; set; }
+        public DbSet<UsersRating> UsersRatings { get; set; }
+        public DbSet<Notes> Notes { get; set; }
+        public DbSet<BookMarks> BookMarks { get; set; }
+        public DbSet<SearchHistory> SearchHistorys { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -28,6 +48,135 @@ namespace WebServer
             modelBuilder.Entity<Title>().Property(x => x.OmdbTitle).HasColumnName("omdb_title");
             modelBuilder.Entity<Title>().Property(x => x.OmdbYear).HasColumnName("omdb_year");
             modelBuilder.Entity<Title>().Property(x => x.OmdbReleaseDate).HasColumnName("omdb_release_date");
+
+
+            modelBuilder.Entity<MediaTypeTable>().ToTable("media_type");
+            modelBuilder.Entity<MediaTypeTable>().Property(x => x.Id).HasColumnName("title_id");
+            modelBuilder.Entity<MediaTypeTable>().Property(x => x.EpisodeId).HasColumnName("episodeid");
+            modelBuilder.Entity<MediaTypeTable>().Property(x => x.SeriesId).HasColumnName("series_id");
+            modelBuilder.Entity<MediaTypeTable>().Property(x => x.EpisodeNumber).HasColumnName("episodenumber");
+            modelBuilder.Entity<MediaTypeTable>().Property(x => x.Episode).HasColumnName("episode");
+            modelBuilder.Entity<MediaTypeTable>().Property(x => x.SeasonNumber).HasColumnName("seasonnumber");
+            modelBuilder.Entity<MediaTypeTable>().Property(x => x.TotalSeasons).HasColumnName("total_seasons");
+
+
+            modelBuilder.Entity<MediaTable>().ToTable("media");
+            modelBuilder.Entity<MediaTable>().Property(x => x.Id).HasColumnName("title_id");
+            modelBuilder.Entity<MediaTable>().Property(x => x.Type).HasColumnName("type");
+            modelBuilder.Entity<MediaTable>().Property(x => x.ParentalGuidance).HasColumnName("parental_guidance");
+
+
+            modelBuilder.Entity<DataTable>().ToTable("data");
+            modelBuilder.Entity<DataTable>().Property(x => x.Id).HasColumnName("title_id");
+            modelBuilder.Entity<DataTable>().Property(x => x.OmdbPoster).HasColumnName("omdb_poster");
+            modelBuilder.Entity<DataTable>().Property(x => x.OmdbPlot).HasColumnName("omdb_plot");
+
+
+            modelBuilder.Entity<MetaDataTable>().ToTable("metadata");
+            modelBuilder.Entity<MetaDataTable>().Property(x => x.Id).HasColumnName("title_id");
+            modelBuilder.Entity<MetaDataTable>().Property(x => x.OriginalTitle).HasColumnName("original_title");
+            modelBuilder.Entity<MetaDataTable>().Property(x => x.IsAdult).HasColumnName("is_adult");
+            modelBuilder.Entity<MetaDataTable>().Property(x => x.RuntimeMinutes).HasColumnName("runtime_minutes");
+            modelBuilder.Entity<MetaDataTable>().Property(x => x.RunTime).HasColumnName("runtime");
+            modelBuilder.Entity<MetaDataTable>().Property(x => x.IsOriginalTitle).HasColumnName("is_original_title");
+            modelBuilder.Entity<MetaDataTable>().Property(x => x.Ordering).HasColumnName("ordering");
+            modelBuilder.Entity<MetaDataTable>().Property(x => x.AkasTypes).HasColumnName("akas_types");
+            modelBuilder.Entity<MetaDataTable>().Property(x => x.AkasAttributes).HasColumnName("akas_attributes");
+            modelBuilder.Entity<MetaDataTable>().Property(x => x.Response).HasColumnName("response");
+            modelBuilder.Entity<MetaDataTable>().Property(x => x.Production).HasColumnName("production");
+            modelBuilder.Entity<MetaDataTable>().Property(x => x.Website).HasColumnName("website");
+            modelBuilder.Entity<MetaDataTable>().Property(x => x.DvdRelease).HasColumnName("dvd_release");
+
+
+            modelBuilder.Entity<Rankings>().ToTable("rankings");
+            modelBuilder.Entity<Rankings>().Property(x => x.Id).HasColumnName("title_id");
+            modelBuilder.Entity<Rankings>().Property(x => x.AverageRating).HasColumnName("average_rating");
+            modelBuilder.Entity<Rankings>().Property(x => x.NumVotes).HasColumnName("num_votes");
+            modelBuilder.Entity<Rankings>().Property(x => x.Ratings).HasColumnName("ratings");
+            modelBuilder.Entity<Rankings>().Property(x => x.Metascore).HasColumnName("metascore");
+            modelBuilder.Entity<Rankings>().Property(x => x.ImdbRating).HasColumnName("imdb_rating");
+            modelBuilder.Entity<Rankings>().Property(x => x.Awards).HasColumnName("awards");
+            modelBuilder.Entity<Rankings>().Property(x => x.ImdbVotes).HasColumnName("imdb_votes");
+            modelBuilder.Entity<Rankings>().Property(x => x.BoxOffice).HasColumnName("box_office");
+
+
+            modelBuilder.Entity<RegionalInfo>().ToTable("regional_info");
+            modelBuilder.Entity<RegionalInfo>().Property(x => x.Id).HasColumnName("title_id");
+            modelBuilder.Entity<RegionalInfo>().Property(x => x.Region).HasColumnName("region");
+            modelBuilder.Entity<RegionalInfo>().Property(x => x.Language).HasColumnName("language");
+            modelBuilder.Entity<RegionalInfo>().Property(x => x.OmdbLanguage).HasColumnName("omdb_language");
+            modelBuilder.Entity<RegionalInfo>().Property(x => x.OmdbCountry).HasColumnName("omdb_country");
+
+
+            modelBuilder.Entity<TitleGenre>().ToTable("regional_info");
+            modelBuilder.Entity<TitleGenre>().Property(x => x.Id).HasColumnName("title_id");
+            modelBuilder.Entity<TitleGenre>().Property(x => x.Genres).HasColumnName("genres");
+
+
+            modelBuilder.Entity<Crew>().ToTable("regional_info");
+            modelBuilder.Entity<Crew>().Property(x => x.Id).HasColumnName("title_id");
+            modelBuilder.Entity<Crew>().Property(x => x.Directors).HasColumnName("directors");
+            modelBuilder.Entity<Crew>().Property(x => x.Writers).HasColumnName("writers");
+
+
+            modelBuilder.Entity<Casting>().ToTable("casting");
+            modelBuilder.Entity<Casting>().Property(x => x.Id).HasColumnName("title_id");
+            modelBuilder.Entity<Casting>().Property(x => x.Ordering).HasColumnName("ordering");
+            modelBuilder.Entity<Casting>().Property(x => x.PersonId).HasColumnName("person_id");
+            modelBuilder.Entity<Casting>().Property(x => x.Category).HasColumnName("category");
+            modelBuilder.Entity<Casting>().Property(x => x.Job).HasColumnName("job");
+            modelBuilder.Entity<Casting>().Property(x => x.Characters).HasColumnName("characters");
+            modelBuilder.Entity<Casting>().Property(x => x.Writer).HasColumnName("writer");
+            modelBuilder.Entity<Casting>().Property(x => x.Actors).HasColumnName("actors");
+            modelBuilder.Entity<Casting>().Property(x => x.Director).HasColumnName("director");
+            modelBuilder.Entity<Casting>().Property(x => x.DirectorId).HasColumnName("directorid");
+
+
+            modelBuilder.Entity<Person>().ToTable("person");
+            modelBuilder.Entity<Person>().Property(x => x.Id).HasColumnName("person_id");
+            modelBuilder.Entity<Person>().Property(x => x.FullName).HasColumnName("fullname");
+            modelBuilder.Entity<Person>().Property(x => x.BirthYear).HasColumnName("birth_year");
+            modelBuilder.Entity<Person>().Property(x => x.DeathYear).HasColumnName("death_year");
+            modelBuilder.Entity<Person>().Property(x => x.Profession).HasColumnName("profession");
+            modelBuilder.Entity<Person>().Property(x => x.KnownForTitles).HasColumnName("known_for_titles");
+
+
+            modelBuilder.Entity<PersonRatings>().ToTable("person_ratings");
+            modelBuilder.Entity<PersonRatings>().Property(x => x.Id).HasColumnName("person_id");
+            modelBuilder.Entity<PersonRatings>().Property(x => x.WeightedAverage).HasColumnName("weighted_average");
+
+
+            modelBuilder.Entity<Users>().ToTable("users");
+            modelBuilder.Entity<Users>().Property(x => x.UserId).HasColumnName("user_id");
+            modelBuilder.Entity<Users>().Property(x => x.UserName).HasColumnName("username");
+            modelBuilder.Entity<Users>().Property(x => x.Password).HasColumnName("password");
+
+
+            modelBuilder.Entity<UsersRating>().ToTable("user_rating");
+            modelBuilder.Entity<UsersRating>().HasKey(x => new { x.UserId, x.Id });
+            modelBuilder.Entity<UsersRating>().Property(x => x.UserId).HasColumnName("user_id");
+            modelBuilder.Entity<UsersRating>().Property(x => x.Id).HasColumnName("title_id");
+            modelBuilder.Entity<UsersRating>().Property(x => x.Rating).HasColumnName("rating");
+            modelBuilder.Entity<UsersRating>().Property(x => x.TimeStamp).HasColumnName("timestamp");
+
+
+            modelBuilder.Entity<Notes>().ToTable("notes");
+            modelBuilder.Entity<Notes>().HasKey(x => new { x.UserId, x.Id });
+            modelBuilder.Entity<Notes>().Property(x => x.UserId).HasColumnName("user_id");
+            modelBuilder.Entity<Notes>().Property(x => x.Id).HasColumnName("title_id");
+            modelBuilder.Entity<Notes>().Property(x => x.UserNote).HasColumnName("user_note");
+
+
+            modelBuilder.Entity<BookMarks>().ToTable("bookmarks");
+            modelBuilder.Entity<BookMarks>().HasKey(x => new { x.UserId, x.Id });
+            modelBuilder.Entity<BookMarks>().Property(x => x.UserId).HasColumnName("user_id");
+            modelBuilder.Entity<BookMarks>().Property(x => x.Id).HasColumnName("title_id");
+
+
+            modelBuilder.Entity<SearchHistory>().ToTable("search_history");
+            modelBuilder.Entity<SearchHistory>().Property(x => x.UserId).HasColumnName("user_id");
+            modelBuilder.Entity<SearchHistory>().Property(x => x.SearchQuery).HasColumnName("username");
+            modelBuilder.Entity<SearchHistory>().Property(x => x.TimeStamp).HasColumnName("timestamp");
         }
     }
 }
