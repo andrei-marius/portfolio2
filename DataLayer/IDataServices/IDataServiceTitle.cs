@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using DataLayer.Models;
 using System.Collections.Generic;
 
-namespace DataLayer
+namespace DataLayer.IDataServices
 {
-    public interface IDataService
+    public interface IDataServiceTitle
     {
         (IList<Title> titles, int count) GetTitles(int page, int pageSize);
         Title? GetTitle(string id);

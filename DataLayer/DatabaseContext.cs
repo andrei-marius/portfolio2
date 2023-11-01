@@ -13,7 +13,7 @@ namespace WebServer
         public DbSet<Title> Titles { get; set; }
         public DbSet<MediaTypeTable> MediaTypes { get; set; }
         public DbSet<MediaTable> MediaTables { get; set; }
-        public DbSet<DataTable> DataTables { get; set; }
+        public DbSet<DataLayer.Models.DataTable> DataTables { get; set; }
         public DbSet<MetaDataTable> MetaDataTables { get; set; }
         public DbSet<Rankings> Rankings { get; set; }
         public DbSet<RegionalInfo> RegionalInfos { get; set; }
@@ -22,7 +22,7 @@ namespace WebServer
         public DbSet<Casting> Castings { get; set; }
         public DbSet<Person> Persons { get; set; }
         public DbSet<PersonRatings> PersonRatings { get; set; }
-        public DbSet<Users> Users { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<UsersRating> UsersRatings { get; set; }
         public DbSet<Notes> Notes { get; set; }
         public DbSet<BookMarks> BookMarks { get; set; }
@@ -66,10 +66,10 @@ namespace WebServer
             modelBuilder.Entity<MediaTable>().Property(x => x.ParentalGuidance).HasColumnName("parental_guidance");
 
 
-            modelBuilder.Entity<DataTable>().ToTable("data");
-            modelBuilder.Entity<DataTable>().Property(x => x.Id).HasColumnName("title_id");
-            modelBuilder.Entity<DataTable>().Property(x => x.OmdbPoster).HasColumnName("omdb_poster");
-            modelBuilder.Entity<DataTable>().Property(x => x.OmdbPlot).HasColumnName("omdb_plot");
+            modelBuilder.Entity<DataLayer.Models.DataTable>().ToTable("data");
+            modelBuilder.Entity<DataLayer.Models.DataTable>().Property(x => x.Id).HasColumnName("title_id");
+            modelBuilder.Entity<DataLayer.Models.DataTable>().Property(x => x.OmdbPoster).HasColumnName("omdb_poster");
+            modelBuilder.Entity<DataLayer.Models.DataTable>().Property(x => x.OmdbPlot).HasColumnName("omdb_plot");
 
 
             modelBuilder.Entity<MetaDataTable>().ToTable("metadata");
@@ -108,12 +108,12 @@ namespace WebServer
             modelBuilder.Entity<RegionalInfo>().Property(x => x.OmdbCountry).HasColumnName("omdb_country");
 
 
-            modelBuilder.Entity<TitleGenre>().ToTable("regional_info");
+            modelBuilder.Entity<TitleGenre>().ToTable("title_genre");
             modelBuilder.Entity<TitleGenre>().Property(x => x.Id).HasColumnName("title_id");
             modelBuilder.Entity<TitleGenre>().Property(x => x.Genres).HasColumnName("genres");
 
 
-            modelBuilder.Entity<Crew>().ToTable("regional_info");
+            modelBuilder.Entity<Crew>().ToTable("crew");
             modelBuilder.Entity<Crew>().Property(x => x.Id).HasColumnName("title_id");
             modelBuilder.Entity<Crew>().Property(x => x.Directors).HasColumnName("directors");
             modelBuilder.Entity<Crew>().Property(x => x.Writers).HasColumnName("writers");
@@ -146,10 +146,11 @@ namespace WebServer
             modelBuilder.Entity<PersonRatings>().Property(x => x.WeightedAverage).HasColumnName("weighted_average");
 
 
-            modelBuilder.Entity<Users>().ToTable("users");
-            modelBuilder.Entity<Users>().Property(x => x.UserId).HasColumnName("user_id");
-            modelBuilder.Entity<Users>().Property(x => x.UserName).HasColumnName("username");
-            modelBuilder.Entity<Users>().Property(x => x.Password).HasColumnName("password");
+            modelBuilder.Entity<User>().ToTable("users");
+            modelBuilder.Entity<User>().HasKey(x => new { x.UserId });
+            modelBuilder.Entity<User>().Property(x => x.UserId).HasColumnName("user_id");
+            modelBuilder.Entity<User>().Property(x => x.UserName).HasColumnName("username");
+            modelBuilder.Entity<User>().Property(x => x.Password).HasColumnName("password");
 
 
             modelBuilder.Entity<UsersRating>().ToTable("user_rating");
@@ -174,6 +175,7 @@ namespace WebServer
 
 
             modelBuilder.Entity<SearchHistory>().ToTable("search_history");
+            modelBuilder.Entity<SearchHistory>().HasNoKey();
             modelBuilder.Entity<SearchHistory>().Property(x => x.UserId).HasColumnName("user_id");
             modelBuilder.Entity<SearchHistory>().Property(x => x.SearchQuery).HasColumnName("username");
             modelBuilder.Entity<SearchHistory>().Property(x => x.TimeStamp).HasColumnName("timestamp");

@@ -1,17 +1,18 @@
-﻿using DataLayer.Models;
+﻿using DataLayer.IDataServices;
+using DataLayer.Models;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using System.Data.SqlTypes;
 using WebServer;
 
-namespace DataLayer
+namespace DataLayer.DataServices
 {
-    public class DataService : IDataService
+    public class DataServiceTitle : IDataServiceTitle
     {
         public (IList<Title> titles, int count) GetTitles(int page, int pageSize)
         {
             var db = new DatabaseContext();
-            var titles = 
+            var titles =
                 db.Titles
                     .Skip(page * pageSize)
                     .Take(pageSize)

@@ -1,4 +1,4 @@
-﻿using DataLayer;
+﻿using DataLayer.IDataServices;
 using DataLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,9 +10,9 @@ namespace WebServer.Controllers
     [ApiController]
     public class TitlesController : BaseController
     {
-        private readonly IDataService _dataService;
+        private readonly IDataServiceTitle _dataService;
 
-        public TitlesController(IDataService dataService, LinkGenerator linkGenerator)
+        public TitlesController(IDataServiceTitle dataService, LinkGenerator linkGenerator)
             :base(linkGenerator) 
         {
             _dataService = dataService;

@@ -1,4 +1,6 @@
-using DataLayer;
+using DataLayer.DataServices;
+using DataLayer.IDataServices;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +11,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<IDataService, DataService>();
+builder.Services.AddSingleton<IDataServiceTitle, DataServiceTitle>();
+builder.Services.AddSingleton<IDataServiceUser, DataServiceUser>();
 
 var app = builder.Build();
 
