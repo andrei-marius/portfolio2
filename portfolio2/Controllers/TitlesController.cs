@@ -43,6 +43,30 @@ namespace WebServer.Controllers
             return Ok(title);
         }
 
+        [HttpGet("similar/{id}")]
+        public IActionResult GetSimilarTitles(string id)
+        {
+            var title = _dataService.GetSimilarTitles(id);
+            if (title == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(title);
+        }
+
+        [HttpGet("search/{userId}/{searchString}")]
+        public IActionResult GetSearch(int userId, string searchString )
+        {
+            var search = _dataService.GetSearch(userId, searchString);
+            if (search == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(search);
+        }
+
         private TitleModel CreateTitleModel(Title title)
         {
             return new TitleModel

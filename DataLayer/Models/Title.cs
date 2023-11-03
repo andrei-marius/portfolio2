@@ -8,7 +8,7 @@ namespace DataLayer.Models
 {
     public class Title
     {
-        public string Id { get; set; }
+        public string? Id { get; set; }
         public string? Type { get; set; }
         public string? PrimaryTitle { get; set; }
         public string? StartYear { get; set; }
