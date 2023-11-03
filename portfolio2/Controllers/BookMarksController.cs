@@ -21,7 +21,6 @@ namespace WebServer.Controllers
             _dataService = dataService;
         }
 
-
         [HttpPost]
         public IActionResult AddBookMark([FromBody] BookMarks model)
         {
@@ -33,8 +32,6 @@ namespace WebServer.Controllers
 
             return Created($"http://localhost:5001/api/bookmarks/{bm.UserId}", bm);
         }
-
-
 
         [HttpDelete("{userId}/{titleId}")]
         public IActionResult RemoveBookMark(int userId, string titleId)
@@ -48,8 +45,7 @@ namespace WebServer.Controllers
             return Ok(rbm);
         }
 
-
-       // [HttpGet("{Id}", Name = nameof(GetBookmark))]
+        [HttpGet("{userId}/{id}", Name = nameof(GetBookmark))]
         public IActionResult GetBookmark(int userId, string id)
         {
             var bm = _dataService.GetBookMark(id, userId);
