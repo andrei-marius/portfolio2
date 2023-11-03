@@ -11,14 +11,11 @@ namespace DataLayer.IDataServices
     {
         User GetUser(string username);
 
-        User? SQLCreateUser(string username, string password);
+        User? CreateUser(string username, string password);
 
-        User? SQLUpdateUser(int id, string newUserName, string newPassword);
+        User? UpdateUser(int id, string newUserName, string newPassword);
 
-        User? SQLLogin(string username, string password);
-
-        
-
-        string? SQLDeleteUser(string username);
+        User? Login(string username, string password);
+        string? DeleteUser(string username);
     }
 }

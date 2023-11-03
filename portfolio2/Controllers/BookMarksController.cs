@@ -24,7 +24,7 @@ namespace WebServer.Controllers
         [HttpPost]
         public IActionResult AddBookMark([FromBody] BookMarks model)
         {
-            var bm = _dataService.SQLAddBookMark(model.UserId, model.Id);
+            var bm = _dataService.AddBookMark(model.UserId, model.Id);
             if (bm == null)
             {
                 return NotFound();
@@ -36,7 +36,7 @@ namespace WebServer.Controllers
         [HttpDelete("{userId}/{titleId}")]
         public IActionResult RemoveBookMark(int userId, string titleId)
         {
-            var rbm = _dataService.SQLRemoveBookMark(userId, titleId);
+            var rbm = _dataService.RemoveBookMark(userId, titleId);
             if (rbm == null)
             {
                 return NotFound();

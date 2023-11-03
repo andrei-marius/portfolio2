@@ -19,21 +19,21 @@ namespace DataLayer.DataServices
             //return db.Categories.Find(categoryId);
         }
 
-        public User SQLCreateUser(string username, string password)
+        public User CreateUser(string username, string password)
         {
             var db = new DatabaseContext();
             var res = db.Database.ExecuteSqlInterpolated($"select * from create_user({username}, {password})");
             return GetUser(username);
         }
         //TO-DO Split this into two functions in the database
-        public User SQLUpdateUser(int id, string newUserName, string newPassword)
+        public User UpdateUser(int id, string newUserName, string newPassword)
         {
             var db = new DatabaseContext();
             var res = db.Database.ExecuteSqlInterpolated($"select * from update_user({id}, {newUserName}, {newPassword})");
             return GetUser(newUserName);
         }
 
-        public string SQLDeleteUser(string username)
+        public string DeleteUser(string username)
         {
             var db = new DatabaseContext();
             var res = db.Database.ExecuteSqlInterpolated($"select * from delete_user({username})");
@@ -49,7 +49,7 @@ namespace DataLayer.DataServices
             return new UserDTO {UserName = user.UserName,Password = user.Password};
         }*/
 
-        public User SQLLogin(string username, string password)
+        public User Login(string username, string password)
         {
             var db = new DatabaseContext();
             var res = db.Database.ExecuteSqlInterpolated($"select * from login_user({username}, {password})");

@@ -10,6 +10,6 @@ namespace DataLayer.Models
     {
         public int UserId { get; set; }
         public string SearchQuery { get; set; }
-        public byte[] TimeStamp { get; set; } // need to check byte[]
+        public DateTime TimeStamp { get; set; } 
     }
 }

@@ -10,9 +10,9 @@ namespace DataLayer.IDataServices
     public interface IDataServiceBookMark
     {
 
-        BookMarks? SQLAddBookMark(int userId, string titleId);
+        BookMarks? AddBookMark(int userId, string titleId);
 
-        string? SQLRemoveBookMark(int userId, string titleId);
+        string? RemoveBookMark(int userId, string titleId);
 
         BookMarks? GetBookMark(string id, int userId);
         List<BookMarks>? GetBookMarks(int userId);

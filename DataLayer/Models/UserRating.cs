@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Models
 {
-    public class UsersRating
+    public class UserRating
     {
         public int UserId { get; set; }
         public string Id { get; set; }
         public int Rating { get; set; }
-        public byte[] TimeStamp { get; set; } // need to check byte[]
+        public DateTime TimeStamp { get; set; }
     }
 }

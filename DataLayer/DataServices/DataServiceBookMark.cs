@@ -12,14 +12,14 @@ namespace DataLayer.DataServices
        
 
       
-        public BookMarks? SQLAddBookMark(int userId, string titleId)
+        public BookMarks? AddBookMark(int userId, string titleId)
         {
             var db = new DatabaseContext();
             var res = db.Database.ExecuteSqlInterpolated($"select * from add_bookmark({userId}, {titleId})");
             return GetBookMark(titleId, userId);
         }
 
-        public string? SQLRemoveBookMark(int userId, string titleId)
+        public string? RemoveBookMark(int userId, string titleId)
         {
             var db = new DatabaseContext();
             var res = db.Database.ExecuteSqlInterpolated($"select * from remove_bookmark({userId}, {titleId})");

@@ -23,7 +23,7 @@ namespace WebServer
         public DbSet<Person> Persons { get; set; }
         public DbSet<PersonRatings> PersonRatings { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<UsersRating> UsersRatings { get; set; }
+        public DbSet<UserRating> UsersRatings { get; set; }
         public DbSet<Notes> Notes { get; set; }
         public DbSet<BookMarks> BookMarks { get; set; }
         public DbSet<SearchHistory> SearchHistorys { get; set; }
@@ -153,12 +153,12 @@ namespace WebServer
             modelBuilder.Entity<User>().Property(x => x.Password).HasColumnName("password");
 
 
-            modelBuilder.Entity<UsersRating>().ToTable("user_rating");
-            modelBuilder.Entity<UsersRating>().HasKey(x => new { x.UserId, x.Id });
-            modelBuilder.Entity<UsersRating>().Property(x => x.UserId).HasColumnName("user_id");
-            modelBuilder.Entity<UsersRating>().Property(x => x.Id).HasColumnName("title_id");
-            modelBuilder.Entity<UsersRating>().Property(x => x.Rating).HasColumnName("rating");
-            modelBuilder.Entity<UsersRating>().Property(x => x.TimeStamp).HasColumnName("timestamp");
+            modelBuilder.Entity<UserRating>().ToTable("user_rating");
+            modelBuilder.Entity<UserRating>().HasKey(x => new { x.UserId, x.Id });
+            modelBuilder.Entity<UserRating>().Property(x => x.UserId).HasColumnName("user_id");
+            modelBuilder.Entity<UserRating>().Property(x => x.Id).HasColumnName("title_id");
+            modelBuilder.Entity<UserRating>().Property(x => x.Rating).HasColumnName("rating");
+            modelBuilder.Entity<UserRating>().Property(x => x.TimeStamp).HasColumnName("timestamp");
 
 
             modelBuilder.Entity<Notes>().ToTable("notes");
