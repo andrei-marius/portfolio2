@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NpgsqlTypes;
 using WebServer.Models;
+ 
 
 namespace WebServer.Controllers
 {
@@ -69,6 +70,18 @@ namespace WebServer.Controllers
 
             return Ok(user);
         }
+        
+        [HttpPost("login")]
+        public IActionResult UserLogin(CreateUserModel ModelUser)
+        {
+            var rbm = _dataService.SQLLogin(ModelUser.UserName, ModelUser.Password);
+            if (rbm == null)
+            {
+                return NotFound();
+            }
+            return Ok(rbm);
+        }
+
 
     }
 }
