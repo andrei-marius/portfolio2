@@ -28,7 +28,6 @@ namespace WebServer
         public DbSet<BookMarks> BookMarks { get; set; }
         public DbSet<SearchHistory> SearchHistorys { get; set; }
 
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.EnableSensitiveDataLogging();
@@ -36,6 +35,7 @@ namespace WebServer
                 .LogTo(Console.Out.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information);
             optionsBuilder.UseNpgsql("host=cit.ruc.dk;db=cit08;uid=cit08;pwd=GGo10g6h7ypY");
         }
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
