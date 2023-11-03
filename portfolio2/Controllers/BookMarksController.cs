@@ -57,7 +57,7 @@ namespace WebServer.Controllers
             return Ok(bm);
         }
 
-        [HttpGet("{UserId}", Name = nameof(GetBookmarks))]
+        [HttpGet("{userId}", Name = nameof(GetBookmarks))]
         public IActionResult GetBookmarks(int userId)
         {
             var bm = _dataService.GetBookMarks(userId);
