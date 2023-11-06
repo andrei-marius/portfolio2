@@ -13,10 +13,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<IDataServiceTitle, DataServiceTitle>();
 builder.Services.AddSingleton<IDataServiceUser, DataServiceUser>();
-
 builder.Services.AddSingleton<IDataServiceBookMark, DataServiceBookMark>();
-
 builder.Services.AddSingleton<IDataServiceRating, DataServiceRating>();
+builder.Services.AddSingleton<IDataServiceSearchHistory, DataServiceSearchHistory>();
 
 
 

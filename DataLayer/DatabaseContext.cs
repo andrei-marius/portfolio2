@@ -177,7 +177,7 @@ namespace WebServer
             modelBuilder.Entity<SearchHistory>().ToTable("search_history");
             modelBuilder.Entity<SearchHistory>().HasNoKey();
             modelBuilder.Entity<SearchHistory>().Property(x => x.UserId).HasColumnName("user_id");
-            modelBuilder.Entity<SearchHistory>().Property(x => x.SearchQuery).HasColumnName("username");
+            modelBuilder.Entity<SearchHistory>().Property(x => x.SearchQuery).HasColumnName("search_query");
             modelBuilder.Entity<SearchHistory>().Property(x => x.TimeStamp).HasColumnName("timestamp");
         }
     }
