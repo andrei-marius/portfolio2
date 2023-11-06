@@ -24,7 +24,7 @@ namespace WebServer.Controllers
         [HttpPost]
         public IActionResult AddBookMark([FromBody] BookMarks model)
         {
-            var bm = _dataService.AddBookMark(model.UserId, model.Id);
+            var bm = _dataService.AddBookMark(model.UserId, model.Id, model.UserNote);
             if (bm == null)
             {
                 return NotFound();
@@ -33,10 +33,23 @@ namespace WebServer.Controllers
             return Created($"http://localhost:5001/api/bookmarks/{bm.UserId}", bm);
         }
 
-        [HttpDelete("{userId}/{titleId}")]
-        public IActionResult RemoveBookMark(int userId, string titleId)
+        [HttpPut]
+        public IActionResult UpdateBookMark([FromBody] BookMarks model)
         {
-            var rbm = _dataService.RemoveBookMark(userId, titleId);
+            var bm = _dataService.UpdateBookMark(model.UserId, model.BookmarkId, model.UserNote);
+            if (bm == null)
+            {
+                return NotFound();
+            }
+
+            return Created($"http://localhost:5001/api/bookmarks/{bm.BookmarkId}", bm);
+            
+        }
+
+        [HttpDelete("{userId}/{bookmarkId}")]
+        public IActionResult RemoveBookMark(int userId, int bookmarkId)
+        {
+            var rbm = _dataService.RemoveBookMark(userId, bookmarkId);
             if (rbm == null)
             {
                 return NotFound();
@@ -45,10 +58,10 @@ namespace WebServer.Controllers
             return Ok(rbm);
         }
 
-        [HttpGet("{userId}/{id}", Name = nameof(GetBookmark))]
-        public IActionResult GetBookmark(int userId, string id)
+        [HttpGet("{userId}/{bookmarkId}", Name = nameof(GetBookmark))]
+        public IActionResult GetBookmark(int userId, int bookmarkId)
         {
-            var bm = _dataService.GetBookMark(id, userId);
+            var bm = _dataService.GetBookMark(bookmarkId, userId);
             if (bm == null)
             {
                 return NotFound();

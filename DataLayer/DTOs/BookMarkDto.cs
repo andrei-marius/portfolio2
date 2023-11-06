@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataLayer.Models
+namespace DataLayer.DTOs
 {
-    public class BookMarks
+    public class BookMarkDto
     {
         public int UserId { get; set; }
         public int BookmarkId { get; set; }

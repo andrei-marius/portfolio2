@@ -10,11 +10,14 @@ namespace DataLayer.IDataServices
     public interface IDataServiceBookMark
     {
 
-        BookMarks? AddBookMark(int userId, string titleId);
+        BookMarks? AddBookMark(int userId, string titleId, string userNote);
 
-        string? RemoveBookMark(int userId, string titleId);
+        BookMarks? UpdateBookMark(int userId, int bookmarkId, string userNote);    
 
-        BookMarks? GetBookMark(string id, int userId);
+        string? RemoveBookMark(int userId, int bookmarkId);
+
+        string? RemoveBookMarks(int userId);
+        BookMarks? GetBookMark(int bookmarkId, int userId);
         List<BookMarks>? GetBookMarks(int userId);
     }
 }

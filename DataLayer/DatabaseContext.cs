@@ -169,9 +169,12 @@ namespace WebServer
 
 
             modelBuilder.Entity<BookMarks>().ToTable("bookmarks");
-            modelBuilder.Entity<BookMarks>().HasKey(x => new { x.UserId, x.Id });
+            modelBuilder.Entity<BookMarks>().HasKey(x => new { x.UserId,x.BookmarkId, x.Id });
             modelBuilder.Entity<BookMarks>().Property(x => x.UserId).HasColumnName("user_id");
+            modelBuilder.Entity<BookMarks>().Property(x => x.BookmarkId).HasColumnName("bookmark_id");
             modelBuilder.Entity<BookMarks>().Property(x => x.Id).HasColumnName("title_id");
+            modelBuilder.Entity<BookMarks>().Property(x => x.UserNote).HasColumnName("user_note");
+
 
 
             modelBuilder.Entity<SearchHistory>().ToTable("search_history");
