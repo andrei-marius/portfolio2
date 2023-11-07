@@ -151,6 +151,8 @@ namespace WebServer
             modelBuilder.Entity<User>().Property(x => x.UserId).HasColumnName("user_id");
             modelBuilder.Entity<User>().Property(x => x.UserName).HasColumnName("username");
             modelBuilder.Entity<User>().Property(x => x.Password).HasColumnName("password");
+            modelBuilder.Entity<User>().Property(x => x.Salt).HasColumnName("salt");
+            modelBuilder.Entity<User>().Property(x => x.Role).HasColumnName("role");
 
 
             modelBuilder.Entity<UserRating>().ToTable("user_rating");

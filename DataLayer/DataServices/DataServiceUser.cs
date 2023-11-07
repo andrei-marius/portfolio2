@@ -19,10 +19,10 @@ namespace DataLayer.DataServices
             //return db.Categories.Find(categoryId);
         }
 
-        public User CreateUser(string username, string password)
+        public User CreateUser(string username, string password, string salt, string role = "User")
         {
             var db = new DatabaseContext();
-            var res = db.Database.ExecuteSqlInterpolated($"select * from create_user({username}, {password})");
+            var res = db.Database.ExecuteSqlInterpolated($"select * from create_user({username}, {password}, {salt}, {role})");
             return GetUser(username);
         }
         //TO-DO Split this into two functions in the database
@@ -54,6 +54,7 @@ namespace DataLayer.DataServices
             var db = new DatabaseContext();
             var res = db.Database.ExecuteSqlInterpolated($"select * from login_user({username}, {password})");
             return GetUser(username);
+
         }
     }
 }

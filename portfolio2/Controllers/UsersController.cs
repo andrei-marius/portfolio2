@@ -5,7 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NpgsqlTypes;
 using WebServer.Models;
- 
+using WebServer.Services;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebServer.Controllers
 {
@@ -14,25 +19,42 @@ namespace WebServer.Controllers
     public class UsersController : BaseController
     {
         private readonly IDataServiceUser _dataService;
+        private readonly IConfiguration _configuration;
+        private readonly Hashing _hashing;
 
-        public UsersController(IDataServiceUser dataService, LinkGenerator linkGenerator)
+
+        public UsersController(
+            IDataServiceUser dataService,
+            LinkGenerator linkGenerator,
+            IConfiguration configuration,
+            Hashing hashing
+        )
             : base(linkGenerator)
         {
             _dataService = dataService;
+            _configuration = configuration;
+            _hashing = hashing;
         }
 
 
         [HttpPost]
         public IActionResult CreateUser(User model)
         {
-            var user = _dataService.CreateUser(model.UserName, model.Password);
-            if (user == null)
+            if (_dataService.GetUser(model.UserName) != null)
             {
-                return NotFound();
+                return Conflict("already exists");
             }
 
-            return Created($"http://localhost:5001/api/user/{user.UserName}", user);
+            (var hashedPwd, var salt) = _hashing.Hash(model.Password);
 
+            var user = _dataService.CreateUser(model.UserName, hashedPwd, salt, model.Role);
+
+            return Created($"http://localhost:5001/api/user/{user.UserName}", new
+            {
+                user.UserId,
+                user.UserName,
+                user.Role
+        });
         }
 
         [HttpPut]
@@ -72,16 +94,40 @@ namespace WebServer.Controllers
         }
         
         [HttpPost("login")]
-        public IActionResult UserLogin(CreateUserModel ModelUser)
+        public IActionResult UserLogin(CreateUserModel user)
         {
-            var rbm = _dataService.Login(ModelUser.UserName, ModelUser.Password);
+            var rbm = _dataService.Login(user.UserName, user.Password);
             if (rbm == null)
             {
-                return NotFound();
+                return NotFound("wrong username");
             }
-            return Ok(rbm);
+
+            if (!_hashing.Verify(user.Password, rbm.Password, rbm.Salt))
+            {
+                return NotFound("wrong password");
+            }
+
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, rbm.UserName),
+                new Claim(ClaimTypes.Role, rbm.Role)
+            };
+
+            var secret = _configuration.GetSection("Auth:Secret").Value;
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
+
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+
+            var token = new JwtSecurityToken(
+                claims: claims,
+                expires: DateTime.Now.AddDays(1),
+                signingCredentials: creds
+            );
+
+            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+
+            return Ok(new { user.UserName, token = jwt });
         }
-
-
     }
 }

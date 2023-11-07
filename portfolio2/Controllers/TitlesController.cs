@@ -1,5 +1,6 @@
 ﻿using DataLayer.IDataServices;
 using DataLayer.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebServer.Models;
@@ -20,6 +21,7 @@ namespace WebServer.Controllers
 
 
         [HttpGet(Name = nameof(GetTitles))]
+        [Authorize(Roles = "admin")]
         public IActionResult GetTitles(int page = 0, int pageSize = 10)
         {
             (var titles, var total) = _dataService.GetTitles(page, pageSize);

@@ -9,9 +9,9 @@ namespace DataLayer.IDataServices
 {
     public interface IDataServiceUser
     {
-        User GetUser(string username);
+        User? GetUser(string username);
 
-        User? CreateUser(string username, string password);
+        User? CreateUser(string username, string password, string salt, string role);
 
         User? UpdateUser(int id, string newUserName, string newPassword);
 
