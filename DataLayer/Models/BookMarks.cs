@@ -10,7 +10,7 @@ namespace DataLayer.Models
     {
         public int UserId { get; set; }
         public int BookmarkId { get; set; }
-        public string Id { get; set; }
+        public string TitleId { get; set; }
         public string? UserNote { get; set; }
     }
 }

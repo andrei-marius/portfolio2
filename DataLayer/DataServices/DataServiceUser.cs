@@ -19,12 +19,14 @@ namespace DataLayer.DataServices
             //return db.Categories.Find(categoryId);
         }
 
+        // We can use perform here instead of select * from. And we assign the variable res for no reason
         public User CreateUser(string username, string password)
         {
             var db = new DatabaseContext();
             var res = db.Database.ExecuteSqlInterpolated($"select * from create_user({username}, {password})");
             return GetUser(username);
         }
+
         //TO-DO Split this into two functions in the database
         public User UpdateUser(int id, string newUserName, string newPassword)
         {

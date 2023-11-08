@@ -168,12 +168,12 @@ namespace WebServer
             modelBuilder.Entity<Notes>().Property(x => x.Id).HasColumnName("title_id");
             modelBuilder.Entity<Notes>().Property(x => x.UserNote).HasColumnName("user_note");
 
-
+            // either change the update function to require the titleID of the movie, or change the composite key declaration
             modelBuilder.Entity<BookMarks>().ToTable("bookmarks");
-            modelBuilder.Entity<BookMarks>().HasKey(x => new { x.UserId,x.BookmarkId, x.Id });
+            modelBuilder.Entity<BookMarks>().HasKey(x => new { x.UserId,x.BookmarkId, x.TitleId });
             modelBuilder.Entity<BookMarks>().Property(x => x.UserId).HasColumnName("user_id");
             modelBuilder.Entity<BookMarks>().Property(x => x.BookmarkId).HasColumnName("bookmark_id");
-            modelBuilder.Entity<BookMarks>().Property(x => x.Id).HasColumnName("title_id");
+            modelBuilder.Entity<BookMarks>().Property(x => x.TitleId).HasColumnName("title_id");
             modelBuilder.Entity<BookMarks>().Property(x => x.UserNote).HasColumnName("user_note");
 
 

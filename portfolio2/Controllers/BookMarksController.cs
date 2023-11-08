@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using NpgsqlTypes;
 using WebServer.Controllers;
 using WebServer.Models;
+using DataLayer.DTOs;
 
 namespace WebServer.Controllers
 {
@@ -16,33 +17,37 @@ namespace WebServer.Controllers
         private readonly IDataServiceBookMark _dataService;
 
         public BookMarksController(IDataServiceBookMark dataService, LinkGenerator linkGenerator)
-            : base(linkGenerator)
+            :base(linkGenerator)
         {
             _dataService = dataService;
         }
 
         [HttpPost]
-        public IActionResult AddBookMark([FromBody] BookMarks model)
+        public IActionResult AddBookMark(BookMarks model)
         {
-            var bm = _dataService.AddBookMark(model.UserId, model.Id, model.UserNote);
+
+            var bm = _dataService.AddBookMark(model.UserId, model.TitleId, model.UserNote);
+
             if (bm == null)
             {
                 return NotFound();
             }
 
-            return Created($"http://localhost:5001/api/bookmarks/{bm.UserId}", bm);
+            return Created($"http://localhost:5001/api/bookmarks/fish", bm);
+
         }
 
         [HttpPut]
-        public IActionResult UpdateBookMark([FromBody] BookMarks model)
+        public IActionResult UpdateBookMark(BookMarkDto model)
         {
+            
             var bm = _dataService.UpdateBookMark(model.UserId, model.BookmarkId, model.UserNote);
             if (bm == null)
             {
                 return NotFound();
             }
 
-            return Created($"http://localhost:5001/api/bookmarks/{bm.BookmarkId}", bm);
+            return Created($"http://localhost:5001/api/bookmarks/", bm);
             
         }
 
@@ -57,11 +62,23 @@ namespace WebServer.Controllers
 
             return Ok(rbm);
         }
-
+        
         [HttpGet("{userId}/{bookmarkId}", Name = nameof(GetBookmark))]
         public IActionResult GetBookmark(int userId, int bookmarkId)
         {
             var bm = _dataService.GetBookMark(bookmarkId, userId);
+            if (bm == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(bm);
+        }
+        
+        [HttpGet("fish/{userId}/{titleId}", Name = nameof(GetBookmarkId))]
+        public IActionResult GetBookmarkId(int userId, string titleId)
+        {
+            var bm = _dataService.GetBookMarkId(userId, titleId);
             if (bm == null)
             {
                 return NotFound();
