@@ -16,6 +16,7 @@ builder.Services.AddSingleton<IDataServiceUser, DataServiceUser>();
 builder.Services.AddSingleton<IDataServiceBookMark, DataServiceBookMark>();
 builder.Services.AddSingleton<IDataServiceRating, DataServiceRating>();
 builder.Services.AddSingleton<IDataServiceSearchHistory, DataServiceSearchHistory>();
+builder.Services.AddSingleton<IDataServiceOftenWorkedWith, DataServiceOftenWorkedWith>();
 
 
 
