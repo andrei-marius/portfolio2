@@ -183,7 +183,7 @@ namespace WebServer
             modelBuilder.Entity<SearchHistory>().Property(x => x.UserId).HasColumnName("user_id");
             modelBuilder.Entity<SearchHistory>().Property(x => x.SearchQuery).HasColumnName("search_query");
             modelBuilder.Entity<SearchHistory>().Property(x => x.TimeStamp).HasColumnName("timestamp");
-
+            modelBuilder.Entity<SearchHistory>().Property(x => x.HistoryId).HasColumnName("HistoryId");
 
             modelBuilder.Entity<WorkedOn>().ToView("workedon");
             modelBuilder.Entity<WorkedOn>().HasKey(x => x.PersonId);

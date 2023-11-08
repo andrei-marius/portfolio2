@@ -9,6 +9,7 @@ namespace DataLayer.Models
     public class SearchHistory
     {
         public int UserId { get; set; }
+        public int HistoryId {  get; set; }
         public string SearchQuery { get; set; }
         public DateTime TimeStamp { get; set; } 
     }

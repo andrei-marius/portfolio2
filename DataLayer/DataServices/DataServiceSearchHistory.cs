@@ -21,8 +21,23 @@ namespace DataLayer.DataServices
                     SearchQuery = x.SearchQuery,
                     TimeStamp = x.TimeStamp
                 });
-                   
+
             return searchHistory.ToList();
+        }
+
+        public string DeleteSearchHistory(int userID)
+        {
+            var db = new DatabaseContext();
+            var res = db.Database.ExecuteSqlInterpolated($"delete from search_history where user_id = {userID}");
+
+            return "Deleted";
+        }
+
+        public string DeleteSearchHistoryById(int userId, int historyid) { 
+        
+            var db = new DatabaseContext();
+            var res = db.Database.ExecuteSqlInterpolated($"delete from search_history where user_id = {userId} and historyid = {historyid}");
+            return "Deleted";
         }
     }
 }
