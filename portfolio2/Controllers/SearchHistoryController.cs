@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebServer.Controllers
 {
-    [Route("api/titles")]
+    [Route("api/search-history")]
     [ApiController]
     public class SearchHistoryController : ControllerBase
     {
@@ -14,7 +14,7 @@ namespace WebServer.Controllers
             _dataService = dataService;
         }
 
-        [HttpGet("search-history/{userId}")]
+        [HttpGet("{userId}")]
         public IActionResult GetSearchHistory(int userId)
         {
             var searchHistory = _dataService.GetSearchHistory(userId);
@@ -25,5 +25,29 @@ namespace WebServer.Controllers
 
             return Ok(searchHistory);
         }
+
+        [HttpDelete("delete/{userId}")]
+        public IActionResult DeleteSearchHistory(int userId)
+        {
+            var deleteHistory = _dataService.DeleteSearchHistory(userId);
+            if (deleteHistory == null) {
+                return NotFound();
+            }
+            return Ok(deleteHistory);
+
+        }
+
+        [HttpDelete("delete/{userId}/{historyid}")]
+        public IActionResult DeleteSearchHistoryById(int userId,int historyid)
+        {
+            var deleteHistory = _dataService.DeleteSearchHistoryById(userId,historyid);
+            if (deleteHistory == null)
+            {
+                return NotFound();
+            }
+            return Ok(deleteHistory);
+
+        }
+
     }
 }

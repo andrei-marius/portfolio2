@@ -5,13 +5,10 @@ using System.ComponentModel;
 using System.Data.SqlTypes;
 using WebServer;
 
-
-
 namespace DataLayer.DataServices
 {
     public class DataServiceUser : IDataServiceUser
     {
-
         public User? GetUser(string username)
         {
             var db = new DatabaseContext();
@@ -19,12 +16,14 @@ namespace DataLayer.DataServices
             //return db.Categories.Find(categoryId);
         }
 
+        // We can use perform here instead of select * from. And we assign the variable res for no reason 
         public User CreateUser(string username, string password, string salt, string role = "User")
         {
             var db = new DatabaseContext();
             var res = db.Database.ExecuteSqlInterpolated($"select * from create_user({username}, {password}, {salt}, {role})");
             return GetUser(username);
         }
+
         //TO-DO Split this into two functions in the database
         public User UpdateUser(int id, string newUserName, string newPassword)
         {
@@ -40,7 +39,6 @@ namespace DataLayer.DataServices
             return $"The user: {username} has been deleted";
         }
 
-
         /*public UserDTO SQLLogin(string username, string password) -- This is the same as below, but does not return UserID
         {
             var db = new DatabaseContext();
@@ -54,7 +52,6 @@ namespace DataLayer.DataServices
             var db = new DatabaseContext();
             var res = db.Database.ExecuteSqlInterpolated($"select * from login_user({username}, {password})");
             return GetUser(username);
-
         }
     }
 }

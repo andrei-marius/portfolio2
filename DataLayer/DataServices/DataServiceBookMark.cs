@@ -4,28 +4,38 @@ using DataLayer.Models;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using System.Data.SqlTypes;
+using System.Numerics;
 using WebServer;
 
 namespace DataLayer.DataServices
 {
     public class DataServiceBookMark : IDataServiceBookMark
     {
-       
 
-      // Due to a change in the structure in the methods in the sqlfunction, addBookmark and GetBookMark no longer contain information that allow for the call of GetBookMark in the AddBookMark
-        public BookMarks? AddBookMark(int userId, string id, string userNote)
+
+        // Due to a change in the structure in the methods in the sqlfunction, addBookmark and GetBookMark no longer contain information that allow for the call of GetBookMark in the AddBookMark
+        
+        public bool AddBookMark(int userId, string titleId, string userNote)
         {
             var db = new DatabaseContext();
-            var res = db.BookMarks.FromSql($"select * from add_bookmark({userId}, {id}, {userNote}");
-            var bookmarkId = res.Select(x => x.BookmarkId).FirstOrDefault();
-            return GetBookMark(bookmarkId,userId);
+            var res = db.Database.ExecuteSqlInterpolated($"select * from add_bookmark({userId}, {titleId}, {userNote})");
+            return db.BookMarks.Select(x => x.TitleId == titleId).FirstOrDefault() != null;
         }
-
-        public BookMarks? UpdateBookMark(int userId, int bookmarkId, string userNote)
+        
+        
+        //public BookMarks? AddBookMark(int userId, string titleId, string userNote)
+        //{
+        //    var db = new DatabaseContext();
+        //    var bm = db.BookMarks.FromSql($"select * from add_bookmark2({userId}, {titleId}, {userNote})");
+        //    //var bookmarkId = db.BookMarks.Where(x => x.UserId == userId && x.TitleId == titleId).Select(x => x.BookmarkId);
+        //    return GetBookMark(GetBookMarkId(userId,titleId), userId);
+        //}
+       
+        public bool? UpdateBookMark(int userId, int bookmarkId, string userNote)
         {
             var db = new DatabaseContext();
-            var res = db.Database.ExecuteSqlInterpolated($"select * from update_bookmark({userId}, {bookmarkId}, {userNote}");
-            return GetBookMark(bookmarkId,userId);
+            var res = db.Database.ExecuteSqlInterpolated($"select update_bookmark({userId}, {bookmarkId}, {userNote})");
+            return db.BookMarks.Select(x => x.BookmarkId == bookmarkId).FirstOrDefault() != null;
         }
 
         // i think the call of remove_bookmark can be done with "exec" or "peform" in the call
@@ -40,7 +50,7 @@ namespace DataLayer.DataServices
         {
             var db = new DatabaseContext();
             var res = db.Database.ExecuteSqlInterpolated($"select * from remove_bookmark({userId})");
-            return "your bookmark has been deleted";
+            return "your bookmarks has been deleted";
         }
         public BookMarks? GetBookMark(int bookmarkId, int userId)
         {
@@ -57,11 +67,18 @@ namespace DataLayer.DataServices
                 {
                   UserId = bookmark.UserId,
                   BookmarkId = bookmark.BookmarkId,
-                  Id = bookmark.Id,
+                  TitleId = bookmark.TitleId,
                   UserNote = bookmark.UserNote
                   
 
                 }).ToList();
+        }
+
+        public int GetBookMarkId(int userId, string titleId) 
+        {
+            var db = new DatabaseContext();
+            var bookmarkId = db.BookMarks.FirstOrDefault(x => x.UserId == userId && x.TitleId == titleId).BookmarkId;
+            return bookmarkId;
         }
 
     }

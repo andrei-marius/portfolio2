@@ -27,6 +27,7 @@ namespace WebServer
         public DbSet<Notes> Notes { get; set; }
         public DbSet<BookMarks> BookMarks { get; set; }
         public DbSet<SearchHistory> SearchHistorys { get; set; }
+        public DbSet<WorkedOn> workedOns { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -169,12 +170,12 @@ namespace WebServer
             modelBuilder.Entity<Notes>().Property(x => x.Id).HasColumnName("title_id");
             modelBuilder.Entity<Notes>().Property(x => x.UserNote).HasColumnName("user_note");
 
-
+            // either change the update function to require the titleID of the movie, or change the composite key declaration
             modelBuilder.Entity<BookMarks>().ToTable("bookmarks");
-            modelBuilder.Entity<BookMarks>().HasKey(x => new { x.UserId,x.BookmarkId, x.Id });
+            modelBuilder.Entity<BookMarks>().HasKey(x => new { x.UserId,x.BookmarkId, x.TitleId });
             modelBuilder.Entity<BookMarks>().Property(x => x.UserId).HasColumnName("user_id");
             modelBuilder.Entity<BookMarks>().Property(x => x.BookmarkId).HasColumnName("bookmark_id");
-            modelBuilder.Entity<BookMarks>().Property(x => x.Id).HasColumnName("title_id");
+            modelBuilder.Entity<BookMarks>().Property(x => x.TitleId).HasColumnName("title_id");
             modelBuilder.Entity<BookMarks>().Property(x => x.UserNote).HasColumnName("user_note");
 
 
@@ -184,6 +185,16 @@ namespace WebServer
             modelBuilder.Entity<SearchHistory>().Property(x => x.UserId).HasColumnName("user_id");
             modelBuilder.Entity<SearchHistory>().Property(x => x.SearchQuery).HasColumnName("search_query");
             modelBuilder.Entity<SearchHistory>().Property(x => x.TimeStamp).HasColumnName("timestamp");
+            modelBuilder.Entity<SearchHistory>().Property(x => x.HistoryId).HasColumnName("HistoryId");
+
+            modelBuilder.Entity<WorkedOn>().ToView("workedon");
+            modelBuilder.Entity<WorkedOn>().HasKey(x => x.PersonId);
+            modelBuilder.Entity<WorkedOn>().Property(x => x.PersonId).HasColumnName("person_id");
+            modelBuilder.Entity<WorkedOn>().Property(x => x.NumberOfTitles).HasColumnName("numof_titles");
+            modelBuilder.Entity<WorkedOn>().Property(x => x.FullName).HasColumnName("fullname");
+            modelBuilder.Entity<WorkedOn>().Property(x => x.TitleId).HasColumnName("title_id");
+            modelBuilder.Entity<WorkedOn>().Property(x => x.PrimaryTitle).HasColumnName("primary_title");
+            
         }
     }
 }
