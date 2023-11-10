@@ -18,7 +18,7 @@ namespace WebServer
         public DbSet<Rankings> Rankings { get; set; }
         public DbSet<RegionalInfo> RegionalInfos { get; set; }
         public DbSet<TitleGenre> TitleGenres { get; set; }
-        public DbSet<Crew> Crews { get; set; }
+        public DbSet<Crew> Crews { get; set; } 
         public DbSet<Casting> Castings { get; set; }
         public DbSet<Person> Persons { get; set; }
         public DbSet<PersonRatings> PersonRatings { get; set; }
@@ -157,9 +157,9 @@ namespace WebServer
 
 
             modelBuilder.Entity<UserRating>().ToTable("user_rating");
-            modelBuilder.Entity<UserRating>().HasKey(x => new { x.UserId, x.Id });
+            modelBuilder.Entity<UserRating>().HasKey(x => new { x.UserId, x.TitleId });
             modelBuilder.Entity<UserRating>().Property(x => x.UserId).HasColumnName("user_id");
-            modelBuilder.Entity<UserRating>().Property(x => x.Id).HasColumnName("title_id");
+            modelBuilder.Entity<UserRating>().Property(x => x.TitleId).HasColumnName("title_id");
             modelBuilder.Entity<UserRating>().Property(x => x.Rating).HasColumnName("rating");
             modelBuilder.Entity<UserRating>().Property(x => x.TimeStamp).HasColumnName("timestamp");
 
