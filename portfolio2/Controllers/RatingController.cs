@@ -27,21 +27,20 @@ namespace WebServer.Controllers
             {
                 return NotFound();
             }
-
             return Ok(ratings);
         }
 
-        [HttpGet("{userId}/{id}", Name = nameof(GetRating))]
-        public IActionResult GetRating(int userId, string id)
+        [HttpGet("{userId}/{titleId}", Name = nameof(GetRating))]
+        public IActionResult GetRating(int userId, string titleId)
         {
-            var rating = _dataService.GetRating(id,userId);
+            var rating = _dataService.GetRating(titleId,userId);
             return Ok(rating);
         }
 
         [HttpPost]
         public IActionResult GiveRating(UserRating model) 
         {
-            var rating = _dataService.CreateNewRating(model.UserId, model.Id, model.Rating);
+            var rating = _dataService.CreateNewRating(model.UserId, model.TitleId, model.Rating);
             if (rating == null)
             {
                 return NotFound();
