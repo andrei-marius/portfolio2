@@ -10,11 +10,11 @@ namespace DataLayer.DataServices
 {
     public class DataServiceTitle : IDataServiceTitle
     {
-        public (IList<Title> titles, int count) GetTitles(int page, int pageSize)
+        public (IList<TitlePosterDto> titles, int count) GetTitles(int page, int pageSize)
         {
             var db = new DatabaseContext();
             var titles =
-                db.Titles
+                db.Titles2
                     .Skip(page * pageSize)
                     .Take(pageSize)
                     .ToList();

@@ -1,8 +1,10 @@
 ﻿using DataLayer.IDataServices;
 using DataLayer.Models;
+using DataLayer.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using WebServer.Models;
 
 namespace WebServer.Controllers
@@ -21,7 +23,7 @@ namespace WebServer.Controllers
 
 
         [HttpGet(Name = nameof(GetTitles))]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public IActionResult GetTitles(int page = 0, int pageSize = 10)
         {
             (var titles, var total) = _dataService.GetTitles(page, pageSize);
@@ -69,12 +71,13 @@ namespace WebServer.Controllers
             return Ok(search);
         }
 
-        private TitleModel CreateTitleModel(Title title)
+        private TitleModel CreateTitleModel(TitlePosterDto title)
         {
             return new TitleModel
             {
                 Url = GetUrl(nameof(GetTitle), new { title.Id }).Replace("%20", ""),
-                Name = title.PrimaryTitle,
+                PrimaryTitle = title.PrimaryTitle,
+                Poster = title.Poster,
             };
         }
     }

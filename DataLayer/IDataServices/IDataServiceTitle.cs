@@ -10,7 +10,7 @@ namespace DataLayer.IDataServices
 {
     public interface IDataServiceTitle
     {
-        (IList<Title> titles, int count) GetTitles(int page, int pageSize);
+        (IList<TitlePosterDto> titles, int count) GetTitles(int page, int pageSize);
         Title? GetTitle(string id);
         IList<SimilarTitleDto> GetSimilarTitles(string id);
         IList<SearchDto> GetSearch(int userId, string searchString);

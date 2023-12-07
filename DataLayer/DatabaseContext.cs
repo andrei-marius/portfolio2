@@ -1,4 +1,5 @@
-﻿using DataLayer.Models;
+﻿using DataLayer.DTOs;
+using DataLayer.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace WebServer
     public class DatabaseContext : DbContext
     {
         public DbSet<Title> Titles { get; set; }
+        public DbSet<TitlePosterDto> Titles2 { get; set; }
         public DbSet<MediaTypeTable> MediaTypes { get; set; }
         public DbSet<MediaTable> MediaTables { get; set; }
         public DbSet<DataLayer.Models.DataTable> DataTables { get; set; }
@@ -40,6 +42,11 @@ namespace WebServer
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<TitlePosterDto>().ToView("posterview");
+            modelBuilder.Entity<TitlePosterDto>().Property(x => x.Id).HasColumnName("title_id");
+            modelBuilder.Entity<TitlePosterDto>().Property(x => x.Poster).HasColumnName("omdb_poster");
+            modelBuilder.Entity<TitlePosterDto>().Property(x => x.PrimaryTitle).HasColumnName("primary_title");
+
             modelBuilder.Entity<Title>().ToTable("title");
             modelBuilder.Entity<Title>().Property(x => x.Id).HasColumnName("title_id");
             modelBuilder.Entity<Title>().Property(x => x.Type).HasColumnName("title_type");
