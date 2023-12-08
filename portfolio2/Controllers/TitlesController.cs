@@ -22,11 +22,11 @@ namespace WebServer.Controllers
         }
 
 
-        [HttpGet(Name = nameof(GetTitles))]
+        [HttpGet("type/{type}", Name = nameof(GetTitles))]
         //[Authorize(Roles = "admin")]
-        public IActionResult GetTitles(int page = 0, int pageSize = 10)
+        public IActionResult GetTitles(string type, int page = 0, int pageSize = 10)
         {
-            (var titles, var total) = _dataService.GetTitles(page, pageSize);
+            (var titles, var total) = _dataService.GetTitles(page, pageSize, type);
 
             var items = titles.Select(CreateTitleModel);
 
@@ -78,6 +78,7 @@ namespace WebServer.Controllers
                 Url = GetUrl(nameof(GetTitle), new { title.Id }).Replace("%20", ""),
                 PrimaryTitle = title.PrimaryTitle,
                 Poster = title.Poster,
+                WeightAvgRating = title.WeightAvgRating
             };
         }
     }

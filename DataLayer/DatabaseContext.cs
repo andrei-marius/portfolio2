@@ -42,10 +42,12 @@ namespace WebServer
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<TitlePosterDto>().ToView("posterview");
+            modelBuilder.Entity<TitlePosterDto>().ToView("posterview1");
             modelBuilder.Entity<TitlePosterDto>().Property(x => x.Id).HasColumnName("title_id");
             modelBuilder.Entity<TitlePosterDto>().Property(x => x.Poster).HasColumnName("omdb_poster");
             modelBuilder.Entity<TitlePosterDto>().Property(x => x.PrimaryTitle).HasColumnName("primary_title");
+            modelBuilder.Entity<TitlePosterDto>().Property(x => x.WeightAvgRating).HasColumnName("average_weighted_rating");
+            modelBuilder.Entity<TitlePosterDto>().Property(x => x.Type).HasColumnName("title_type");
 
             modelBuilder.Entity<Title>().ToTable("title");
             modelBuilder.Entity<Title>().Property(x => x.Id).HasColumnName("title_id");
