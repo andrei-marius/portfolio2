@@ -45,7 +45,7 @@ namespace WebServer
             modelBuilder.Entity<TitlePosterDto>().ToView("posterview1");
             modelBuilder.Entity<TitlePosterDto>().Property(x => x.Id).HasColumnName("title_id");
             modelBuilder.Entity<TitlePosterDto>().Property(x => x.Poster).HasColumnName("omdb_poster");
-            modelBuilder.Entity<TitlePosterDto>().Property(x => x.PrimaryTitle).HasColumnName("primary_title");
+            modelBuilder.Entity<TitlePosterDto>().Property(x => x.Name).HasColumnName("primary_title");
             modelBuilder.Entity<TitlePosterDto>().Property(x => x.WeightAvgRating).HasColumnName("average_weighted_rating");
             modelBuilder.Entity<TitlePosterDto>().Property(x => x.Type).HasColumnName("title_type");
 

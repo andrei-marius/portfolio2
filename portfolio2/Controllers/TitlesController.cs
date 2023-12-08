@@ -76,7 +76,7 @@ namespace WebServer.Controllers
             return new TitleModel
             {
                 Url = GetUrl(nameof(GetTitle), new { title.Id }).Replace("%20", ""),
-                PrimaryTitle = title.PrimaryTitle,
+                Name = title.Name,
                 Poster = title.Poster,
                 WeightAvgRating = title.WeightAvgRating
             };
