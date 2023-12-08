@@ -22,15 +22,28 @@ namespace WebServer.Controllers
         }
 
 
-        [HttpGet("type/{type}", Name = nameof(GetTitles))]
+        [HttpGet("movies", Name = nameof(GetMovies))]
         //[Authorize(Roles = "admin")]
-        public IActionResult GetTitles(string type, int page = 0, int pageSize = 10)
+        public IActionResult GetMovies(string type="movie", int page = 0, int pageSize = 10)
         {
             (var titles, var total) = _dataService.GetTitles(page, pageSize, type);
 
             var items = titles.Select(CreateTitleModel);
 
-            var result = Paging(items, total, page, pageSize, nameof(GetTitles));
+            var result = Paging(items, total, page, pageSize, nameof(GetMovies));
+
+            return Ok(result);
+        }
+        
+        [HttpGet("series", Name = nameof(GetSeries))]
+        //[Authorize(Roles = "admin")]
+        public IActionResult GetSeries(string type = "tvSeries", int page = 0, int pageSize = 10)
+        {
+            (var titles, var total) = _dataService.GetTitles(page, pageSize, type);
+
+            var items = titles.Select(CreateTitleModel);
+
+            var result = Paging(items, total, page, pageSize, nameof(GetSeries));
 
             return Ok(result);
         }
