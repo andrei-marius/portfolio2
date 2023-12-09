@@ -34,6 +34,10 @@ namespace WebServer.Controllers
         public IActionResult GetRating(int userId, string titleId)
         {
             var rating = _dataService.GetRating(titleId,userId);
+            if (rating == null)
+            {
+                return NotFound();
+            }
             return Ok(rating);
         }
 

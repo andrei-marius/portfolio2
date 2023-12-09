@@ -127,7 +127,7 @@ namespace WebServer.Controllers
 
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
-            return Ok(new { user.UserName, token = jwt });
+            return Ok(new { id = rbm.UserId, user.UserName, token = jwt });
         }
     }
 }
