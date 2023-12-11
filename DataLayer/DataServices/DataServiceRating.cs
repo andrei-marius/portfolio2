@@ -16,7 +16,9 @@ namespace DataLayer.DataServices
                 .Select(rating => new UserRating
                 {
                     UserId = rating.UserId,
-                    TitleId = rating.TitleId
+                    TitleId = rating.TitleId,
+                    Rating = rating.Rating,
+                    TimeStamp = rating.TimeStamp
 
                 }).ToList();
 
