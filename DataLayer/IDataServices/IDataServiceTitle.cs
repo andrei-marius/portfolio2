@@ -11,7 +11,7 @@ namespace DataLayer.IDataServices
     public interface IDataServiceTitle
     {
         (IList<TitlePosterDto> titles, int count) GetTitles(int page, int pageSize, string type);
-        Title? GetTitle(string id);
+        TitleComplete? GetTitle(string id);
         IList<SimilarTitleDto> GetSimilarTitles(string id);
         IList<SearchDto> GetSearch(int userId, string searchString);
     }

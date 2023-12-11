@@ -13,6 +13,7 @@ namespace WebServer
     {
         public DbSet<Title> Titles { get; set; }
         public DbSet<TitlePosterDto> Titles2 { get; set; }
+        public DbSet<TitleComplete> Titles3 { get; set; }
         public DbSet<MediaTypeTable> MediaTypes { get; set; }
         public DbSet<MediaTable> MediaTables { get; set; }
         public DbSet<DataLayer.Models.DataTable> DataTables { get; set; }
@@ -48,6 +49,26 @@ namespace WebServer
             modelBuilder.Entity<TitlePosterDto>().Property(x => x.Name).HasColumnName("primary_title");
             modelBuilder.Entity<TitlePosterDto>().Property(x => x.WeightAvgRating).HasColumnName("average_weighted_rating");
             modelBuilder.Entity<TitlePosterDto>().Property(x => x.Type).HasColumnName("title_type");
+            
+            modelBuilder.Entity<TitleComplete>().ToTable("displaytable");
+            modelBuilder.Entity<TitleComplete>().Property(x => x.Id).HasColumnName("title_id");
+            modelBuilder.Entity<TitleComplete>().Property(x => x.PrimaryTitle).HasColumnName("primary_title");
+            modelBuilder.Entity<TitleComplete>().Property(x => x.Type).HasColumnName("title_type");
+            modelBuilder.Entity<TitleComplete>().Property(x => x.StartYear).HasColumnName("start_year");
+            modelBuilder.Entity<TitleComplete>().Property(x => x.EndYear).HasColumnName("end_year");
+            modelBuilder.Entity<TitleComplete>().Property(x => x.OmdbReleaseDate).HasColumnName("omdb_release_date");
+            modelBuilder.Entity<TitleComplete>().Property(x => x.Awards).HasColumnName("awards");
+            modelBuilder.Entity<TitleComplete>().Property(x => x.Rated).HasColumnName("rated");
+            modelBuilder.Entity<TitleComplete>().Property(x => x.Year).HasColumnName("year");
+            modelBuilder.Entity<TitleComplete>().Property(x => x.Runtime).HasColumnName("runtime");
+            modelBuilder.Entity<TitleComplete>().Property(x => x.Poster).HasColumnName("poster");
+            modelBuilder.Entity<TitleComplete>().Property(x => x.Director).HasColumnName("director");
+            modelBuilder.Entity<TitleComplete>().Property(x => x.TotalSeasons).HasColumnName("totalseasons");
+            modelBuilder.Entity<TitleComplete>().Property(x => x.BoxOffice).HasColumnName("box_office");
+            modelBuilder.Entity<TitleComplete>().Property(x => x.Country).HasColumnName("country");
+            modelBuilder.Entity<TitleComplete>().Property(x => x.Actors).HasColumnName("actors");
+            modelBuilder.Entity<TitleComplete>().Property(x => x.Writer).HasColumnName("writer");
+            modelBuilder.Entity<TitleComplete>().Property(x => x.WeightAvgRating).HasColumnName("average_weighted_rating");
 
             modelBuilder.Entity<Title>().ToTable("title");
             modelBuilder.Entity<Title>().Property(x => x.Id).HasColumnName("title_id");

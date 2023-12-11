@@ -22,10 +22,10 @@ namespace DataLayer.DataServices
             return (titles, db.Titles.Count());
         }
 
-        public Title? GetTitle(string id)
+        public TitleComplete? GetTitle(string id)
         {
             var db = new DatabaseContext();
-            return db.Titles.FirstOrDefault(x => x.Id == id);
+            return db.Titles3.FirstOrDefault(x => x.Id == id);
             //return db.Categories.Find(categoryId);
         }
 
@@ -43,7 +43,7 @@ namespace DataLayer.DataServices
         public IList<SearchDto> GetSearch(int userId, string searchString )
         {
             var db = new DatabaseContext();
-            var titles = db.Titles.FromSql($"select * from simple_string_search({userId}, {searchString})")
+            var titles = db.Titles.FromSql($"select * from NewSearch({userId}, {searchString})")
                 .Select(x => new SearchDto
                 {
                     SearchString = x.PrimaryTitle
