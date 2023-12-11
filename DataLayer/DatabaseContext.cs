@@ -70,6 +70,7 @@ namespace WebServer
             modelBuilder.Entity<TitleComplete>().Property(x => x.Writer).HasColumnName("writer");
             modelBuilder.Entity<TitleComplete>().Property(x => x.WeightAvgRating).HasColumnName("average_weighted_rating");
 
+
             modelBuilder.Entity<Title>().ToTable("title");
             modelBuilder.Entity<Title>().Property(x => x.Id).HasColumnName("title_id");
             modelBuilder.Entity<Title>().Property(x => x.Type).HasColumnName("title_type");

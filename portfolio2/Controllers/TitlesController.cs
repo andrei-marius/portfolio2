@@ -84,6 +84,19 @@ namespace WebServer.Controllers
             return Ok(search);
         }
 
+        [HttpGet("genre/{genreName}", Name = nameof(GetTitlesByGenre))]
+        public IActionResult GetTitlesByGenre(string genreName, int page = 0, int pageSize = 10)
+        {
+            (var titles, var total) = _dataService.GetTitlesByGenre(page, pageSize, genreName);
+
+            var items = titles.Select(CreateTitleModel);
+
+            var result = Paging(items, total, page, pageSize, nameof(GetTitlesByGenre));
+
+            return Ok(result);
+        }
+
+
         private TitleModel CreateTitleModel(TitlePosterDto title)
         {
             return new TitleModel
