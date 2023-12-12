@@ -31,6 +31,7 @@ namespace WebServer
         public DbSet<BookMarks> BookMarks { get; set; }
         public DbSet<SearchHistory> SearchHistorys { get; set; }
         public DbSet<WorkedOn> workedOns { get; set; }
+        public DbSet<SearchDto> SearchResults { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -43,6 +44,10 @@ namespace WebServer
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<SearchDto>().ToFunction("newsearch");
+            modelBuilder.Entity<SearchDto>().HasNoKey();
+            modelBuilder.Entity<SearchDto>().Property(x => x.SearchString).HasColumnName("newsearch");
+
             modelBuilder.Entity<TitlePosterDto>().ToView("posterview1");
             modelBuilder.Entity<TitlePosterDto>().Property(x => x.Id).HasColumnName("title_id");
             modelBuilder.Entity<TitlePosterDto>().Property(x => x.Poster).HasColumnName("omdb_poster");

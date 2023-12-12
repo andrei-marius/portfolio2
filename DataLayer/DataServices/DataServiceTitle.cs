@@ -43,11 +43,11 @@ namespace DataLayer.DataServices
         public IList<SearchDto> GetSearch(int userId, string searchString )
         {
             var db = new DatabaseContext();
-            var titles = db.Titles.FromSql($"select * from NewSearch({userId}, {searchString})")
+            var titles = db.SearchResults.FromSql($"select * from NewSearch({userId}, {searchString})")
                 .Select(x => new SearchDto
-                {
-                    SearchString = x.PrimaryTitle
-                });
+                 {
+                     SearchString = x.SearchString
+                 });
             return titles.ToList();
         }
 
