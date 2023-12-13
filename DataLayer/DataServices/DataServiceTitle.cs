@@ -13,14 +13,33 @@ namespace DataLayer.DataServices
         public (IList<TitlePosterDto> titles, int count) GetTitles(int page, int pageSize, string type)
         {
             var db = new DatabaseContext();
-            var titles =
-                db.Titles2
-                    .Where(x => x.Type == type)
-                    .Skip(page * pageSize)
-                    .Take(pageSize)
-                    .ToList();
-            return (titles, db.Titles.Count());
+
+            var titles = db.Titles2
+                .Join(
+                    db.Rankings,
+                    title => title.Id,
+                    ranking => ranking.Id,
+                    (title, ranking) => new { Title = title, Ranking = ranking }
+                )
+                .Where(x => x.Title.Type == type)
+                .OrderByDescending(x => x.Ranking.AverageRating)
+                .Skip(page * pageSize)
+                .Take(pageSize)
+                .Select(x => new TitlePosterDto
+                {
+                    Id = x.Title.Id,
+                    Poster = x.Title.Poster,
+                    WeightAvgRating = x.Title.WeightAvgRating,
+                    Name = x.Title.Name,
+                    Type = x.Title.Type,
+                })
+                .ToList();
+
+            var count = db.Titles2.Count(x => x.Type == type);
+
+            return (titles, count);
         }
+
 
         public TitleComplete? GetTitle(string id)
         {
