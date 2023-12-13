@@ -92,23 +92,19 @@ namespace WebServer.Controllers
 
             return Ok(user);
         }
-        
+
         [HttpPost("login")]
         public IActionResult UserLogin(CreateUserModel user)
         {
             var rbm = _dataService.Login(user.UserName, user.Password);
-            if (rbm == null)
-            {
-                return NotFound("wrong username");
-            }
 
-            if (!_hashing.Verify(user.Password, rbm.Password, rbm.Salt))
+            if (rbm == null || !_hashing.Verify(user.Password, rbm.Password, rbm.Salt))
             {
-                return NotFound("wrong password");
+                return NotFound(new { message = "Invalid username or password" });
             }
 
             var claims = new List<Claim>
-            {
+    {
                 new Claim(ClaimTypes.Name, rbm.UserName),
                 new Claim(ClaimTypes.Role, rbm.Role)
             };
@@ -129,5 +125,6 @@ namespace WebServer.Controllers
 
             return Ok(new { id = rbm.UserId, user.UserName, token = jwt });
         }
+
     }
 }
