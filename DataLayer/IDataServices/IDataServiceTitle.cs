@@ -14,7 +14,7 @@ namespace DataLayer.IDataServices
         TitleComplete? GetTitle(string id);
         IList<SimilarTitleDto> GetSimilarTitles(string id);
         IList<SearchDto> GetSearch(int userId, string searchString);
-
+        IList<SearchDto> GetSearch2(string searchString);
         (IList<TitlePosterDto> titles, int total) GetTitlesByGenre(int page, int pageSize, string genreName);
     }
 }

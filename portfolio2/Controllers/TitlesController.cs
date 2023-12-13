@@ -72,10 +72,22 @@ namespace WebServer.Controllers
             return Ok(title);
         }
 
-        [HttpGet("search/{userId}/{searchString}")]
+        [HttpGet("search-loggedin/{userId}/{searchString}")]
         public IActionResult GetSearch(int userId, string searchString )
         {
             var search = _dataService.GetSearch(userId, searchString);
+            if (search == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(search);
+        }
+        
+        [HttpGet("search/{searchString}")]
+        public IActionResult GetSearch2(string searchString )
+        {
+            var search = _dataService.GetSearch2(searchString);
             if (search == null)
             {
                 return NotFound();

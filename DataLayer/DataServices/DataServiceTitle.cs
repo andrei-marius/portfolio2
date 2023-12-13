@@ -50,6 +50,16 @@ namespace DataLayer.DataServices
                  });
             return titles.ToList();
         }
+        public IList<SearchDto> GetSearch2(string searchString )
+        {
+            var db = new DatabaseContext();
+            var titles = db.SearchResults.FromSql($"select * from NewSearch2({searchString})")
+                .Select(x => new SearchDto
+                 {
+                     SearchString = x.SearchString
+                 });
+            return titles.ToList();
+        }
 
         public (IList<TitlePosterDto> titles, int total) GetTitlesByGenre(int page, int pageSize, string genreName)
         {

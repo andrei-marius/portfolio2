@@ -47,12 +47,16 @@ namespace WebServer
             modelBuilder.Entity<SearchDto>().ToFunction("newsearch");
             modelBuilder.Entity<SearchDto>().HasNoKey();
             modelBuilder.Entity<SearchDto>().Property(x => x.SearchString).HasColumnName("newsearch");
+            
+            modelBuilder.Entity<SearchDto>().ToFunction("newsearch2");
+            modelBuilder.Entity<SearchDto>().HasNoKey();
+            modelBuilder.Entity<SearchDto>().Property(x => x.SearchString).HasColumnName("newsearch2");
 
             modelBuilder.Entity<TitlePosterDto>().ToView("posterview1");
             modelBuilder.Entity<TitlePosterDto>().Property(x => x.Id).HasColumnName("title_id");
             modelBuilder.Entity<TitlePosterDto>().Property(x => x.Poster).HasColumnName("omdb_poster");
             modelBuilder.Entity<TitlePosterDto>().Property(x => x.Name).HasColumnName("primary_title");
-            modelBuilder.Entity<TitlePosterDto>().Property(x => x.WeightAvgRating).HasColumnName("average_weighted_rating");
+            modelBuilder.Entity<TitlePosterDto>().Property(x => x.WeightAvgRating).HasColumnName("average_rating");
             modelBuilder.Entity<TitlePosterDto>().Property(x => x.Type).HasColumnName("title_type");
             
             modelBuilder.Entity<TitleComplete>().ToTable("displaytable");
