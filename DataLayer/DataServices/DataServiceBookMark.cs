@@ -39,18 +39,18 @@ namespace DataLayer.DataServices
         }
 
         // i think the call of remove_bookmark can be done with "exec" or "peform" in the call
-        public string? RemoveBookMark(int userId, int bookmarkId)
+        public bool? RemoveBookMark(int userId, int bookmarkId)
         {
             var db = new DatabaseContext();
             var res = db.Database.ExecuteSqlInterpolated($"select * from remove_bookmark({userId}, {bookmarkId})");
-            return "your bookmark has been deleted";
+            return db.BookMarks.Select(x => x.BookmarkId == bookmarkId).FirstOrDefault() ? false : true;
         }
 
-        public string? RemoveBookMarks(int userId)
+        public bool? RemoveBookMarks(int userId)
         {
             var db = new DatabaseContext();
-            var res = db.Database.ExecuteSqlInterpolated($"select * from remove_bookmark({userId})");
-            return "your bookmarks has been deleted";
+            var res = db.Database.ExecuteSqlInterpolated($"select * from remove_bookmarks({userId})");
+            return db.BookMarks.Select(x => x.UserId == userId).FirstOrDefault() ? false : true;
         }
         public BookMarks? GetBookMark(int bookmarkId, int userId)
         {

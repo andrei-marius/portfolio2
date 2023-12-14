@@ -63,6 +63,18 @@ namespace WebServer.Controllers
             return Ok(rbm);
         }
         
+        [HttpDelete("{userId}")]
+        public IActionResult RemoveBookMarks(int userId)
+        {
+            var rbm = _dataService.RemoveBookMarks(userId);
+            if (rbm == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(rbm);
+        }
+        
         [HttpGet("{userId}/{bookmarkId}", Name = nameof(GetBookmark))]
         public IActionResult GetBookmark(int userId, int bookmarkId)
         {

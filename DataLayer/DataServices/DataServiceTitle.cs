@@ -86,13 +86,22 @@ namespace DataLayer.DataServices
 
             var titles = db.Titles2
                 .FromSql($"select * from get_titles_by_genre2({genreName})")
+                .Join(
+                    db.Rankings,
+                    title => title.Id,
+                    ranking => ranking.Id,
+                    (title, ranking) => new { Title = title, Ranking = ranking }
+                )
+                .OrderByDescending(x => x.Ranking.AverageRating)
+                .Skip(page * pageSize)
+                .Take(pageSize)
                 .Select(x => new TitlePosterDto
                 {
-                    Id =x.Id,
-                    Poster = x.Poster,
-                    WeightAvgRating = x.WeightAvgRating,
-                    Name = x.Name,
-                    Type = x.Type,
+                    Id =x.Title.Id,
+                    Poster = x.Title.Poster,
+                    WeightAvgRating = x.Title.WeightAvgRating,
+                    Name = x.Title.Name,
+                    Type = x.Title.Type,
                 })
                 .ToList();
 

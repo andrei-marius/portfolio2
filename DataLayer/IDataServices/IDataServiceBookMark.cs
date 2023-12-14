@@ -17,9 +17,9 @@ namespace DataLayer.IDataServices
 
         bool? UpdateBookMark(int userId, int bookmarkId, string userNote);    
 
-        string? RemoveBookMark(int userId, int bookmarkId);
+        bool? RemoveBookMark(int userId, int bookmarkId);
 
-        string? RemoveBookMarks(int userId);
+        bool? RemoveBookMarks(int userId);
         BookMarks? GetBookMark(int bookmarkId, int userId);
         List<BookMarkPosterDto>? GetBookMarks(int userId);
     }
