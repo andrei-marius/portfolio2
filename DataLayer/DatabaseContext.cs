@@ -33,6 +33,7 @@ namespace WebServer
         public DbSet<WorkedOn> workedOns { get; set; }
         public DbSet<SearchDto> SearchResults { get; set; }
         public DbSet<SearchDto2> SearchResults2 { get; set; }
+        public DbSet<BookMarkPosterDto> BookMarkPosterDtos { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -58,7 +59,16 @@ namespace WebServer
             modelBuilder.Entity<TitlePosterDto>().Property(x => x.Name).HasColumnName("primary_title");
             modelBuilder.Entity<TitlePosterDto>().Property(x => x.WeightAvgRating).HasColumnName("average_rating");
             modelBuilder.Entity<TitlePosterDto>().Property(x => x.Type).HasColumnName("title_type");
-            
+
+            modelBuilder.Entity<BookMarkPosterDto>().ToFunction("bookmarks_poster");
+            modelBuilder.Entity<BookMarkPosterDto>().HasKey(x => new { x.UserId });
+            modelBuilder.Entity<BookMarkPosterDto>().Property(x => x.UserId).HasColumnName("user_id");
+            modelBuilder.Entity<BookMarkPosterDto>().Property(x => x.BookmarkId).HasColumnName("bookmark_id");
+            modelBuilder.Entity<BookMarkPosterDto>().Property(x => x.TitleId).HasColumnName("title_id");
+            modelBuilder.Entity<BookMarkPosterDto>().Property(x => x.UserNote).HasColumnName("user_note");
+            modelBuilder.Entity<BookMarkPosterDto>().Property(x => x.OmdbPoster).HasColumnName("omdb_poster");
+            modelBuilder.Entity<BookMarkPosterDto>().Property(x => x.PrimaryTitle).HasColumnName("primary_title");
+
             modelBuilder.Entity<TitleComplete>().ToTable("displaytable");
             modelBuilder.Entity<TitleComplete>().Property(x => x.Id).HasColumnName("title_id");
             modelBuilder.Entity<TitleComplete>().Property(x => x.PrimaryTitle).HasColumnName("primary_title");

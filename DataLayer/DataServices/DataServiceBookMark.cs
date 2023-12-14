@@ -19,7 +19,7 @@ namespace DataLayer.DataServices
         {
             var db = new DatabaseContext();
             var res = db.Database.ExecuteSqlInterpolated($"select * from add_bookmark({userId}, {titleId}, {userNote})");
-            return db.BookMarks.Select(x => x.TitleId == titleId).FirstOrDefault() != null;
+            return db.BookMarks.Select(x => x.TitleId == titleId).FirstOrDefault() ? false : true;
         }
         
         
@@ -58,20 +58,24 @@ namespace DataLayer.DataServices
             return db.BookMarks.FirstOrDefault(x => x.BookmarkId == bookmarkId && x.UserId == userId);
         }
 
-        public List<BookMarks> GetBookMarks(int userId)
+        public List<BookMarkPosterDto> GetBookMarks(int userId)
 
         {
             var db = new DatabaseContext();
-            return db.BookMarks.Where(bookmark => bookmark.UserId == userId)
-                .Select( bookmark => new BookMarks
+            var bookmark = db.BookMarkPosterDtos.FromSql($"select * from bookmark_posters({userId})")
+                .Select(x => new BookMarkPosterDto
                 {
-                  UserId = bookmark.UserId,
-                  BookmarkId = bookmark.BookmarkId,
-                  TitleId = bookmark.TitleId,
-                  UserNote = bookmark.UserNote
-                  
+                    UserId = x.UserId,
+                    BookmarkId = x.BookmarkId,
+                    TitleId = x.TitleId,
+                    UserNote = x.UserNote,
+                    OmdbPoster = x.OmdbPoster,
+                    PrimaryTitle = x.PrimaryTitle
+                })
+                .ToList();
+            
 
-                }).ToList();
+            return (bookmark);
         }
 
         public int GetBookMarkId(int userId, string titleId) 

@@ -1,4 +1,5 @@
-﻿using DataLayer.Models;
+﻿using DataLayer.DTOs;
+using DataLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,6 @@ namespace DataLayer.IDataServices
 
         string? RemoveBookMarks(int userId);
         BookMarks? GetBookMark(int bookmarkId, int userId);
-        List<BookMarks>? GetBookMarks(int userId);
+        List<BookMarkPosterDto>? GetBookMarks(int userId);
     }
 }
