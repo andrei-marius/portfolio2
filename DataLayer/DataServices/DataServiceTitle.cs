@@ -53,7 +53,7 @@ namespace DataLayer.DataServices
         public IList<SearchDto> GetSearch2(string searchString )
         {
             var db = new DatabaseContext();
-            var titles = db.SearchResults.FromSql($"select * from NewSearch2({searchString})")
+            var titles = db.SearchResults2.FromSql($"select * from NewSearch2({searchString})")
                 .Select(x => new SearchDto
                  {
                      SearchString = x.SearchString

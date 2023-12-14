@@ -32,6 +32,7 @@ namespace WebServer
         public DbSet<SearchHistory> SearchHistorys { get; set; }
         public DbSet<WorkedOn> workedOns { get; set; }
         public DbSet<SearchDto> SearchResults { get; set; }
+        public DbSet<SearchDto2> SearchResults2 { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -40,18 +41,17 @@ namespace WebServer
                 .LogTo(Console.Out.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information);
             optionsBuilder.UseNpgsql("host=cit.ruc.dk;db=cit08;uid=cit08;pwd=GGo10g6h7ypY");
         }
-        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<SearchDto2>().ToFunction("newsearch2");
+            modelBuilder.Entity<SearchDto2>().HasNoKey();
+            modelBuilder.Entity<SearchDto2>().Property(x => x.SearchString).HasColumnName("newsearch2");
+
             modelBuilder.Entity<SearchDto>().ToFunction("newsearch");
             modelBuilder.Entity<SearchDto>().HasNoKey();
             modelBuilder.Entity<SearchDto>().Property(x => x.SearchString).HasColumnName("newsearch");
             
-            modelBuilder.Entity<SearchDto>().ToFunction("newsearch2");
-            modelBuilder.Entity<SearchDto>().HasNoKey();
-            modelBuilder.Entity<SearchDto>().Property(x => x.SearchString).HasColumnName("newsearch2");
-
             modelBuilder.Entity<TitlePosterDto>().ToView("posterview1");
             modelBuilder.Entity<TitlePosterDto>().Property(x => x.Id).HasColumnName("title_id");
             modelBuilder.Entity<TitlePosterDto>().Property(x => x.Poster).HasColumnName("omdb_poster");
