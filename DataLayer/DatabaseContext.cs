@@ -45,10 +45,10 @@ namespace WebServer
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<SearchDto2>().ToFunction("newsearch3");
-            modelBuilder.Entity<SearchDto2>().HasNoKey();
-            modelBuilder.Entity<SearchDto2>().Property(x => x.Id).HasColumnName("result_id");
-            modelBuilder.Entity<SearchDto2>().Property(x => x.SearchString).HasColumnName("result_title");
+            modelBuilder.Entity<SearchDto>().ToFunction("newsearch3");
+            modelBuilder.Entity<SearchDto>().HasNoKey();
+            modelBuilder.Entity<SearchDto>().Property(x => x.Id).HasColumnName("result_id");
+            modelBuilder.Entity<SearchDto>().Property(x => x.SearchString).HasColumnName("result_title");
 
             modelBuilder.Entity<SearchDto2>().ToFunction("newsearch4");
             modelBuilder.Entity<SearchDto2>().HasNoKey();
