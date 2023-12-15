@@ -62,9 +62,10 @@ namespace DataLayer.DataServices
         public IList<SearchDto> GetSearch(int userId, string searchString )
         {
             var db = new DatabaseContext();
-            var titles = db.SearchResults.FromSql($"select * from NewSearch({userId}, {searchString})")
+            var titles = db.SearchResults.FromSql($"select * from NewSearch4({userId}, {searchString})")
                 .Select(x => new SearchDto
                  {
+                     Id= x.Id,
                      SearchString = x.SearchString
                  });
             return titles.ToList();
@@ -72,11 +73,12 @@ namespace DataLayer.DataServices
         public IList<SearchDto> GetSearch2(string searchString )
         {
             var db = new DatabaseContext();
-            var titles = db.SearchResults2.FromSql($"select * from NewSearch2({searchString})")
+            var titles = db.SearchResults2.FromSql($"select * from NewSearch3({searchString})")
                 .Select(x => new SearchDto
                  {
-                     SearchString = x.SearchString
-                 });
+                    Id = x.Id,
+                    SearchString = x.SearchString
+                });
             return titles.ToList();
         }
 

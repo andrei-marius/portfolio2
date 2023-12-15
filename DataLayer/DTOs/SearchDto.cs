@@ -8,7 +8,7 @@ namespace DataLayer.DTOs
 {
     public class SearchDto
     {
-        //public int UserId { get; set; }
+        public string Id { get; set; }
         public string SearchString { get; set; }
     }
 }
