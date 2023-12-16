@@ -10,8 +10,8 @@ namespace DataLayer.IDataServices
     public interface IDataServiceSearchHistory
     {
         IList<SearchHistoryDto> GetSearchHistory(int userId);
-        string DeleteSearchHistory(int userId);
+        bool DeleteSearchHistory(int userId);
 
-        string DeleteSearchHistoryById(int userId,int historyId);
+        bool DeleteSearchHistoryById(int userId,int historyId);
     }
 }

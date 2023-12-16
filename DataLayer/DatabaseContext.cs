@@ -45,14 +45,16 @@ namespace WebServer
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<SearchDto2>().ToFunction("newsearch2");
-            modelBuilder.Entity<SearchDto2>().HasNoKey();
-            modelBuilder.Entity<SearchDto2>().Property(x => x.SearchString).HasColumnName("newsearch2");
-
-            modelBuilder.Entity<SearchDto>().ToFunction("newsearch");
+            modelBuilder.Entity<SearchDto>().ToFunction("newsearch3");
             modelBuilder.Entity<SearchDto>().HasNoKey();
-            modelBuilder.Entity<SearchDto>().Property(x => x.SearchString).HasColumnName("newsearch");
-            
+            modelBuilder.Entity<SearchDto>().Property(x => x.Id).HasColumnName("result_id");
+            modelBuilder.Entity<SearchDto>().Property(x => x.SearchString).HasColumnName("result_title");
+
+            modelBuilder.Entity<SearchDto2>().ToFunction("newsearch4");
+            modelBuilder.Entity<SearchDto2>().HasNoKey();
+            modelBuilder.Entity<SearchDto2>().Property(x => x.Id).HasColumnName("result_id");
+            modelBuilder.Entity<SearchDto2>().Property(x => x.SearchString).HasColumnName("result_title");
+
             modelBuilder.Entity<TitlePosterDto>().ToView("posterview1");
             modelBuilder.Entity<TitlePosterDto>().Property(x => x.Id).HasColumnName("title_id");
             modelBuilder.Entity<TitlePosterDto>().Property(x => x.Poster).HasColumnName("omdb_poster");
@@ -238,7 +240,7 @@ namespace WebServer
             modelBuilder.Entity<SearchHistory>().Property(x => x.UserId).HasColumnName("user_id");
             modelBuilder.Entity<SearchHistory>().Property(x => x.SearchQuery).HasColumnName("search_query");
             modelBuilder.Entity<SearchHistory>().Property(x => x.TimeStamp).HasColumnName("timestamp");
-            modelBuilder.Entity<SearchHistory>().Property(x => x.HistoryId).HasColumnName("HistoryId");
+            modelBuilder.Entity<SearchHistory>().Property(x => x.HistoryId).HasColumnName("historyid");
 
             modelBuilder.Entity<WorkedOn>().ToView("workedon");
             modelBuilder.Entity<WorkedOn>().HasKey(x => x.PersonId);

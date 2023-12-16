@@ -92,7 +92,7 @@ namespace WebServer.Controllers
             {
                 return NotFound();
             }
-
+      
             return Ok(search);
         }
 
@@ -116,7 +116,8 @@ namespace WebServer.Controllers
                 Url = GetUrl(nameof(GetTitle), new { title.Id }).Replace("%20", ""),
                 Name = title.Name,
                 Poster = title.Poster,
-                WeightAvgRating = title.WeightAvgRating
+                WeightAvgRating = title.WeightAvgRating,
+                Id = title.Id
             };
         }
     }

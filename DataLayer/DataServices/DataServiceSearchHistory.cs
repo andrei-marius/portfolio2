@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DataLayer.DTOs;
 using DataLayer.IDataServices;
+using DataLayer.Models;
 using Microsoft.EntityFrameworkCore;
 using WebServer;
 
@@ -18,6 +19,7 @@ namespace DataLayer.DataServices
             var searchHistory = db.SearchHistorys.FromSql($"select * from get_search_history({userId})")
                 .Select(x => new SearchHistoryDto
                 {
+                    Id = x.HistoryId,
                     SearchQuery = x.SearchQuery,
                     TimeStamp = x.TimeStamp
                 });
@@ -25,19 +27,18 @@ namespace DataLayer.DataServices
             return searchHistory.ToList();
         }
 
-        public string DeleteSearchHistory(int userID)
+        public bool DeleteSearchHistory(int userID)
         {
             var db = new DatabaseContext();
             var res = db.Database.ExecuteSqlInterpolated($"delete from search_history where user_id = {userID}");
-
-            return "Deleted";
+            return db.SearchHistorys.Select(x => x.UserId == userID ).FirstOrDefault() ? false : true;
         }
 
-        public string DeleteSearchHistoryById(int userId, int historyid) { 
+        public bool DeleteSearchHistoryById(int userId, int historyid) { 
         
             var db = new DatabaseContext();
             var res = db.Database.ExecuteSqlInterpolated($"delete from search_history where user_id = {userId} and historyid = {historyid}");
-            return "Deleted";
+            return db.SearchHistorys.Select(x => x.HistoryId == historyid).FirstOrDefault() ? false : true;
         }
     }
 }
