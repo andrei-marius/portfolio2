@@ -18,8 +18,9 @@ namespace DataLayer.DataServices
                     UserId = rating.UserId,
                     TitleId = rating.TitleId,
                     Rating = rating.Rating,
-                    TimeStamp = rating.TimeStamp
-
+                    TimeStamp = rating.TimeStamp,
+                    OmdbPoster = rating.OmdbPoster,
+                    PrimaryTitle = rating.PrimaryTitle,
                 }).ToList();
 
         }
