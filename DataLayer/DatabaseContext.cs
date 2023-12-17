@@ -219,6 +219,9 @@ namespace WebServer
             modelBuilder.Entity<UserRating>().Property(x => x.TitleId).HasColumnName("title_id");
             modelBuilder.Entity<UserRating>().Property(x => x.Rating).HasColumnName("rating");
             modelBuilder.Entity<UserRating>().Property(x => x.TimeStamp).HasColumnName("timestamp");
+            modelBuilder.Entity<UserRating>().Property(x => x.OmdbPoster).HasColumnName("omdb_poster");
+            modelBuilder.Entity<UserRating>().Property(x => x.PrimaryTitle).HasColumnName("primary_title");
+
 
 
             modelBuilder.Entity<Notes>().ToTable("notes");
