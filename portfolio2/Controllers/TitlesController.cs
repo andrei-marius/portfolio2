@@ -108,6 +108,13 @@ namespace WebServer.Controllers
             return Ok(result);
         }
 
+        [HttpGet("genres", Name = nameof(GetGenres))]
+        public IActionResult GetGenres()
+        {
+            var genres = _dataService.GetGenres();
+
+            return Ok(genres);
+        }
 
         private TitleModel CreateTitleModel(TitlePosterDto title)
         {

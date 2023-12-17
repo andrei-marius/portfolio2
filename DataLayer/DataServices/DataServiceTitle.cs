@@ -114,7 +114,18 @@ namespace DataLayer.DataServices
             return (titles, totalTitles);
         }
 
+        public IList<Genre> GetGenres()
+        {
+            var db = new DatabaseContext();
 
+            var genres = db.Genres
+                .Select(x => new Genre
+                {
+                    TitleGenre = x.TitleGenre
+                })
+                .ToList();
 
+            return genres;
+        }
     }
 }

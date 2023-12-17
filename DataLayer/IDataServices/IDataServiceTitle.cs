@@ -16,5 +16,6 @@ namespace DataLayer.IDataServices
         IList<SearchDto2> GetSearch(int userId, string searchString);
         IList<SearchDto> GetSearch2(string searchString);
         (IList<TitlePosterDto> titles, int total) GetTitlesByGenre(int page, int pageSize, string genreName);
+        IList<Genre> GetGenres();
     }
 }

@@ -34,6 +34,7 @@ namespace WebServer
         public DbSet<SearchDto> SearchResults { get; set; }
         public DbSet<SearchDto2> SearchResults2 { get; set; }
         public DbSet<BookMarkPosterDto> BookMarkPosterDtos { get; set; }
+        public DbSet<Genre> Genres { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -45,6 +46,10 @@ namespace WebServer
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Genre>().ToView("genres");
+            modelBuilder.Entity<Genre>().HasNoKey();
+            modelBuilder.Entity<Genre>().Property(x => x.TitleGenre).HasColumnName("word");
+
             modelBuilder.Entity<SearchDto>().ToFunction("newsearch3");
             modelBuilder.Entity<SearchDto>().HasNoKey();
             modelBuilder.Entity<SearchDto>().Property(x => x.Id).HasColumnName("result_id");
