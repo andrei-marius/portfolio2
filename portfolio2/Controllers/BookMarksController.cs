@@ -87,6 +87,18 @@ namespace WebServer.Controllers
             return Ok(bm);
         }
         
+        [HttpGet("by-title-id/{userId}/{titleId}", Name = nameof(GetBookmarkByTitleId))]
+        public IActionResult GetBookmarkByTitleId(int userId, string titleId)
+        {
+            var bm = _dataService.GetBookMarkByTitleId(titleId, userId);
+            if (bm == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(bm);
+        }
+        
         [HttpGet("fish/{userId}/{titleId}", Name = nameof(GetBookmarkId))]
         public IActionResult GetBookmarkId(int userId, string titleId)
         {

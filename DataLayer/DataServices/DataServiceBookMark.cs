@@ -57,6 +57,12 @@ namespace DataLayer.DataServices
             var db = new DatabaseContext();
             return db.BookMarks.FirstOrDefault(x => x.BookmarkId == bookmarkId && x.UserId == userId);
         }
+        
+        public BookMarks? GetBookMarkByTitleId(string titleId, int userId)
+        {
+            var db = new DatabaseContext();
+            return db.BookMarks.FirstOrDefault(x => x.TitleId == titleId && x.UserId == userId);
+        }
 
         public List<BookMarkPosterDto> GetBookMarks(int userId)
 

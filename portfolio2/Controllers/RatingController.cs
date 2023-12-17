@@ -1,5 +1,6 @@
 using DataLayer.IDataServices;
 using DataLayer.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NpgsqlTypes;
@@ -42,7 +43,8 @@ namespace WebServer.Controllers
         }
 
         [HttpPost]
-        public IActionResult GiveRating(UserRating model) 
+        [Authorize(Roles = "user")]
+        public IActionResult GiveRating(RatingModel model) 
         {
             var rating = _dataService.CreateNewRating(model.UserId, model.TitleId, model.Rating);
             if (rating == null)

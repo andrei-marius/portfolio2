@@ -1,10 +1,10 @@
 ﻿namespace WebServer.Models
 {
-    internal class RatingModel
+    public class RatingModel
     {
         // An attempt at structuring the DTO 
-        public string Url { get; set; }
-        public string Id { get; set; }
-        public object Rating { get; set; }
+        public int UserId { get; set; }
+        public string TitleId { get; set; }
+        public int Rating { get; set; }
     }
 }
