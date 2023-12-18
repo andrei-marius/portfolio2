@@ -11,6 +11,6 @@ namespace DataLayer.IDataServices
     {
         List<UserRating>? GetRatings(int userId);
         UserRating? GetRating(string id, int userId);
-        UserRating? CreateNewRating(int userId, string id, int rating);
+        UserRating? CreateNewRating(int userId, string id, int rating, DateTime timestamp);
     }
 }

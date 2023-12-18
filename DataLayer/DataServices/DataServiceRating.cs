@@ -30,10 +30,10 @@ namespace DataLayer.DataServices
             var db = new DatabaseContext();
             return db.UsersRatings.FirstOrDefault(x => x.UserId == userId && x.TitleId == movieId);
         }
-        public UserRating? CreateNewRating(int userId, string id, int rating)
+        public UserRating? CreateNewRating(int userId, string id, int rating, DateTime timestamp)
         {
             var db = new DatabaseContext();
-            var res = db.Database.ExecuteSqlInterpolated($"select * from update_rating({userId}, {id}, {rating})");
+            var res = db.Database.ExecuteSqlInterpolated($"select * from update_rating({userId}, {id}, {rating}, {@timestamp}::timestamp)");
             return GetRating(id, userId);
         }
         //TODO the database does not contain a DeleteRating function as of yet 

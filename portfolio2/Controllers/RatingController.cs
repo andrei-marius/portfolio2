@@ -46,13 +46,14 @@ namespace WebServer.Controllers
         [Authorize(Roles = "user")]
         public IActionResult GiveRating(RatingModel model) 
         {
-            var rating = _dataService.CreateNewRating(model.UserId, model.TitleId, model.Rating);
-            if (rating == null)
-            {
-                return NotFound();
-            }
+            var rating = _dataService.CreateNewRating(model.UserId, model.TitleId, model.Rating, model.TimeStamp);
+            //if (rating == null)
+            //{
+            //    return NotFound();
+            //}
 
-            return Created($"http://localhost:5001/api/ratings/{rating.UserId}", rating);
+            return Ok(new { url = $"http://localhost:5001/api/ratings/{model.UserId}/{model.TitleId}", rating = model });
+            //return Created($"http://localhost:5001/api/ratings/{rating.UserId}/{rating.TitleId}", rating);
         }
 
         //TO-DO likely the use of a DTO that takes aspects from user & userRating would be useful here to provide meaningful info to the END USER

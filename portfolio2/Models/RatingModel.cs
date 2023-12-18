@@ -6,5 +6,6 @@
         public int UserId { get; set; }
         public string TitleId { get; set; }
         public int Rating { get; set; }
+        public DateTime TimeStamp { get; set; }
     }
 }
